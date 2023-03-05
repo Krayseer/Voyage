@@ -12,7 +12,7 @@ public class Samsung extends Phone{
     private Processor processor;
 
     @Autowired
-    public void setProcessor(@Qualifier(value = "exynoslearclear") Processor processor) {
+    public void setProcessor(@Qualifier(value = "exynos") Processor processor) {
         this.processor = processor;
     }
 }
