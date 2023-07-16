@@ -1,0 +1,24 @@
+<app-header/>
+<div *ngIf="localStorage.getItem('token'); else el">
+  <div class="main">
+    <div class="user-container">
+      <div class="user-info" *ngIf="user$ | async as user">
+        <div>Имя: {{ user.name }}</div>
+        <div>Возраст: {{ user.age }}</div>
+        <div>Номер телефона: {{ user.phoneNumber }}</div>
+        <button routerLink="/user-cars">Автомобили</button>
+      </div>
+      <div>
+        <img *ngIf="imageSource$ | async as imageSource;" [src]="imageSource" alt="Аватарка" class="avatar">
+        <div class="upload-icon">
+          <fa-icon (click)="fileInput.click()" [icon]="faPlus"></fa-icon>
+          <input #fileInput type="file" style="display: none" (change)="selectPhoto($event)">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #el>
+  <button routerLink="/register">Зарегистрироваться</button>
+  <button routerLink="/auth">Войти</button>
+</ng-template>

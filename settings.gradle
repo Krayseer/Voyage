@@ -1,0 +1,3 @@
+rootProject.name = 'voyage'
+
+includeBuild 'voyage-backend'

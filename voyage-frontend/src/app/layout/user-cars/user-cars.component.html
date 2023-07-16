@@ -1,0 +1,37 @@
+<app-header/>
+<div class="main-container">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="add-car-container">
+      <div>
+        <label for="mark">Марка: </label>
+        <input type="text" id="mark" formControlName="mark">
+      </div>
+      <div>
+        <label for="color">Цвет: </label>
+        <input type="text" id="color" formControlName="color">
+      </div>
+      <div>
+        <label for="licensePlate">Номер: </label>
+        <input type="text" id="licensePlate" formControlName="licensePlate">
+      </div>
+      <button type="submit" [disabled]="userForm.invalid">Создать</button>
+    </div>
+  </form>
+  <div>
+    <div class="car-container">
+      <div *ngFor="let car of userCars$ | async">
+        <div class="car">
+          <div class="car-info">
+            <span>{{ car.mark }}</span>
+            <span>{{ car.color }}</span>
+            <span>{{ car.licensePlate }}</span>
+          </div>
+          <div class="car-photo">
+            ФОТО
+          </div>
+          <fa-icon [icon]="faTrash" (click)="deleteCar(car.id)"></fa-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<app-header/>
+<div class="modal-backdrop">
+  <div class="trip-container">
+    <div *ngFor="let trip of trips$ | async" (click)="onSelectTrip(trip)">
+      <div class="trip-info">
+        <span>Адрес отправления: <strong>{{ trip.addressFrom }}</strong></span>
+        <span>Адрес назначения: <strong>{{ trip.addressTo }}</strong></span>
+        <span>Стоимость поездки: <strong>{{ trip.price | currency }}</strong></span>
+        <span>Время отправления <strong>{{ trip.tripTime | date: 'dd-MM-YYYY HH:mm' }}</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
+<app-trip-details *ngIf="selectedTrip" [trip]="selectedTrip" (closeEmitter)="selectedTrip = null"></app-trip-details>
