@@ -1,5 +1,6 @@
 package ru.krayseer.voyage.services.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.krayseer.voyage.services.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,6 +18,7 @@ import java.util.function.Function;
 
 import static ru.krayseer.voyage.commons.constants.JwtConst.TOKEN_LIFE_CYCLE;
 
+@Slf4j
 @Service
 public class JwtServiceImpl implements JwtService {
 
@@ -30,8 +32,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
+        return claimsResolver.apply(extractAllClaims(token));
     }
 
     @Override

@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/trip").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

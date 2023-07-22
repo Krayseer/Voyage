@@ -1,15 +1,15 @@
-package ru.krayseer.voyage.commons.exceptions.handlers;
+package ru.krayseer.voyage.commons.exceptions;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.krayseer.voyage.commons.exceptions.Error;
+import ru.krayseer.voyage.commons.exceptions.ErrorResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,22 +19,15 @@ import java.util.Map;
 @RestControllerAdvice
 public class ServiceExceptionHandler {
 
-    @ResponseStatus(HttpStatus.BAD_GATEWAY)
     @ExceptionHandler(Error.class)
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
     public ErrorResponse handlerException(Error ex) {
         log.error("Ошибка: " + ex.getMessage());
-        return new ErrorResponse(ex.getMessage());
+        return new ErrorResponse(ex.getMessage(), ex.getErrorCode());
     }
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(ExpiredJwtException.class)
-    public ErrorResponse handlerJwtException(ExpiredJwtException ex) {
-        log.error("Необходимо авторизоваться");
-        return new ErrorResponse(ex.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> validationHandler(MethodArgumentNotValidException ex) {
         log.error("Ошибка валидации");
         var errors = new HashMap<String, String>();

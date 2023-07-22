@@ -1,0 +1,15 @@
+package ru.krayseer.voyage.commons.constants;
+
+public enum ErrorCode {
+
+    ACCOUNT_NOT_EXISTS,
+    CAR_IS_PRESENT,
+    CAR_NOT_EXISTS,
+    EMAIL_ALREADY_EXISTS,
+    PHONE_NUMBER_ALREADY_EXISTS,
+    SELF_SUBSCRIBE,
+    TRIP_NOT_EXISTS,
+    USERNAME_ALREADY_EXISTS,
+    USERNAME_NOT_EXISTS
+
+}

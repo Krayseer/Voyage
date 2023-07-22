@@ -3,6 +3,7 @@ package ru.krayseer.voyage.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
+import ru.krayseer.voyage.domain.entities.Account;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.services.AdminService;
 import ru.krayseer.voyage.services.factories.AccountFactory;
@@ -22,4 +23,8 @@ public class AdminServiceImpl implements AdminService {
         return accountRepository.findAll().stream().map(accountFactory::createAccountResponse).toList();
     }
 
+    @Override
+    public void setAdminRoleForUser(Account account) {
+
+    }
 }

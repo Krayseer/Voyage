@@ -1,5 +1,6 @@
 package ru.krayseer.voyage.config;
 
+import lombok.SneakyThrows;
 import ru.krayseer.voyage.services.JwtService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +30,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
     @Override
+    @SneakyThrows
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+                                    @NonNull FilterChain filterChain) {
         var authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith(START_TOKEN_TAG)) {
@@ -45,7 +47,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtService.isTokenValid(jwt, userDetails)) {
-                var authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                var authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities()
+                );
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
