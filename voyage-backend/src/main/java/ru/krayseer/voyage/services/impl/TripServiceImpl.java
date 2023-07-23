@@ -41,14 +41,12 @@ public class TripServiceImpl implements TripService {
     private final FollowerFactory followerFactory;
 
     @Override
-    @Cacheable("trips")
     public List<TripResponse> loadAllTrips() {
         log.info("Load all trips");
         return tripRepository.findAll().stream().map(tripFactory::createResponse).toList();
     }
 
     @Override
-    @CacheEvict(value="trips", allEntries=true)
     public TripResponse createNewTrip(String username, TripRequest tripRequest) {
         tripRequest.setDriverUsername(username);
         Trip trip = tripFactory.createObjectFrom(tripRequest);
@@ -58,7 +56,6 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    @CacheEvict(value="trips", allEntries=true)
     public FollowerResponse subscribeFollowerOnTrip(Long tripId, String username) {
         var trip = tripRepository.findById(tripId).orElseThrow(TripNotExistsError::new);
         if(trip.getDriver().getUsername().equals(username)) {
@@ -76,7 +73,6 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    @CacheEvict(value="trips", allEntries=true)
     public TripResponse updateTrip(Long tripId, TripRequest tripRequest) {
         Trip trip = tripRepository.findById(tripId).orElseThrow(TripNotExistsError::new);
         trip.setPrice(tripRequest.getPrice());
@@ -90,7 +86,6 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    @CacheEvict(value="trips", allEntries=true)
     public void deleteTrip(Long tripId) {
         var trip = tripRepository.findById(tripId).orElseThrow(TripNotExistsError::new);
         log.info("Delete trip with id: {}", tripId);

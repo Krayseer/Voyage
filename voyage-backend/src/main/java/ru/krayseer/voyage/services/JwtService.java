@@ -7,12 +7,21 @@ import java.util.function.Function;
 
 public interface JwtService {
 
+    /**
+     * Получить имя пользователя из токена
+     * @param token токен
+     * @return username пользователя
+     */
     String extractUsername(String token);
 
-    <T> T extractClaim(String token, Function<Claims, T> claimsResolver);
-
+    /**
+     * Создать токен для пользователя
+     */
     String generateToken(UserDetails userDetails);
 
+    /**
+     * Валидный ли токен
+     */
     Boolean isTokenValid(String token, UserDetails userDetails);
 
 }

@@ -31,11 +31,6 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        return claimsResolver.apply(extractAllClaims(token));
-    }
-
-    @Override
     public String generateToken(UserDetails userDetails) {
         return Jwts
                 .builder()
@@ -52,6 +47,10 @@ public class JwtServiceImpl implements JwtService {
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) &&
                 !extractClaim(token, Claims::getExpiration).before(new Date());
+    }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        return claimsResolver.apply(extractAllClaims(token));
     }
 
     private Claims extractAllClaims(String token) {

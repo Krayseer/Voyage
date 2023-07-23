@@ -1,6 +1,12 @@
 package ru.krayseer.voyage.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import ru.krayseer.voyage.commons.constants.ErrorCode;
+import ru.krayseer.voyage.commons.exceptions.ErrorResponse;
+import ru.krayseer.voyage.commons.exceptions.errors.EmailAlreadyExistsError;
 import ru.krayseer.voyage.services.JwtService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +27,7 @@ import java.io.IOException;
 import static ru.krayseer.voyage.commons.constants.JwtConst.INDEX_START_TOKEN_VALUE;
 import static ru.krayseer.voyage.commons.constants.JwtConst.START_TOKEN_TAG;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -42,7 +49,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         var jwt = authHeader.substring(INDEX_START_TOKEN_VALUE);
-        var username = jwtService.extractUsername(jwt);
+        String username;
+        try {
+            username = jwtService.extractUsername(jwt);
+        } catch (Exception ex) {
+            handleAuthenticationError(response);
+            return;
+        }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userDetails = userDetailsService.loadUserByUsername(username);
@@ -55,6 +68,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    @SneakyThrows
+    private void handleAuthenticationError(HttpServletResponse response) {
+        log.error("Ошибка авторизации");
+        ErrorResponse errorResponse = new ErrorResponse("Необходимо авторизоваться", ErrorCode.AUTHENTICATION_ERROR);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        response.getWriter().write(new ObjectMapper().writeValueAsString(errorResponse));
     }
 
 }
