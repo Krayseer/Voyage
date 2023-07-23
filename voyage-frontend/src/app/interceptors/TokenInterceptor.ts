@@ -1,11 +1,18 @@
 import {Injectable, OnInit} from "@angular/core";
-import {HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
+} from "@angular/common/http";
+import {catchError, Observable, throwError} from "rxjs";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  private token!: string | null;
+  private readonly token!: string | null;
 
   constructor() {
     this.token = localStorage.getItem('token');
@@ -18,6 +25,11 @@ export class TokenInterceptor implements HttpInterceptor {
     const authReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${this.token}`)
     });
-    return next.handle(authReq);
+    return next.handle(authReq).pipe(
+      catchError((error: any) => {
+        localStorage.clear();
+        return throwError(error);
+      })
+    );
   }
 }
