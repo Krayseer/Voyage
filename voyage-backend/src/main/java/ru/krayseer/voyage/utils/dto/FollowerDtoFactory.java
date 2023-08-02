@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.services.factories;
+package ru.krayseer.voyage.utils.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import ru.krayseer.voyage.domain.repositories.TripRepository;
 
 @Component
 @RequiredArgsConstructor
-public class FollowerFactory extends BaseFactory<Follower, FollowerRequest> {
+public class FollowerDtoFactory extends BaseDtoFactory<Follower, FollowerRequest> {
 
     private final TripRepository tripRepository;
 

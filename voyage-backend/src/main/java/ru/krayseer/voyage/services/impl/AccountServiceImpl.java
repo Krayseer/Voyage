@@ -19,7 +19,7 @@ import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
 import ru.krayseer.voyage.domain.dto.responses.PhotoUploadResponse;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.services.AccountService;
-import ru.krayseer.voyage.services.factories.AccountFactory;
+import ru.krayseer.voyage.utils.dto.AccountDtoFactory;
 
 @Slf4j
 @Service
@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
 
-    private final AccountFactory accountFactory;
+    private final AccountDtoFactory accountFactory;
 
     private final RestTemplate restTemplate;
 

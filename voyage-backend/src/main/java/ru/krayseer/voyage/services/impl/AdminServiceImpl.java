@@ -6,7 +6,7 @@ import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
 import ru.krayseer.voyage.domain.entities.Account;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.services.AdminService;
-import ru.krayseer.voyage.services.factories.AccountFactory;
+import ru.krayseer.voyage.utils.dto.AccountDtoFactory;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class AdminServiceImpl implements AdminService {
 
     private final AccountRepository accountRepository;
 
-    private final AccountFactory accountFactory;
+    private final AccountDtoFactory accountFactory;
 
     @Override
     public List<AccountResponse> loadAllAccounts() {

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-import ru.krayseer.voyage.services.factories.AccountFactory;
+import ru.krayseer.voyage.utils.dto.AccountDtoFactory;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final AccountFactory accountFactory;
+    private final AccountDtoFactory accountFactory;
 
     /**
      * Секретный ключ для создания администратора

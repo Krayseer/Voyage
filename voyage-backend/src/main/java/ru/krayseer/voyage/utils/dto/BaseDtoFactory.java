@@ -1,9 +1,9 @@
-package ru.krayseer.voyage.services.factories;
+package ru.krayseer.voyage.utils.dto;
 
 import ru.krayseer.voyage.domain.dto.Request;
 import ru.krayseer.voyage.domain.dto.Response;
 
-public abstract class BaseFactory<T, R extends Request> {
+public abstract class BaseDtoFactory<T, R extends Request> {
 
     /**
      * @param object объект, из которого нужно создать response для пользователя

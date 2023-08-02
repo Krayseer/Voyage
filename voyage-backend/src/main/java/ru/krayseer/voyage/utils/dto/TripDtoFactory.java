@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.services.factories;
+package ru.krayseer.voyage.utils.dto;
 
 import org.springframework.stereotype.Component;
 import ru.krayseer.voyage.commons.exceptions.errors.CarNotExistsError;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class TripFactory extends BaseFactory<Trip, TripRequest> {
+public class TripDtoFactory extends BaseDtoFactory<Trip, TripRequest> {
 
     private final AccountRepository accountRepository;
 

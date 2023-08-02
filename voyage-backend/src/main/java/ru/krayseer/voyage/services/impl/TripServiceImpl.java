@@ -1,8 +1,6 @@
 package ru.krayseer.voyage.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import ru.krayseer.voyage.commons.exceptions.errors.SubscribeError;
 import ru.krayseer.voyage.commons.exceptions.errors.TripNotExistsError;
@@ -16,8 +14,8 @@ import ru.krayseer.voyage.domain.repositories.FollowerRepository;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
 import ru.krayseer.voyage.commons.events.DeleteTripEvent;
 import ru.krayseer.voyage.services.TripService;
-import ru.krayseer.voyage.services.factories.FollowerFactory;
-import ru.krayseer.voyage.services.factories.TripFactory;
+import ru.krayseer.voyage.utils.dto.FollowerDtoFactory;
+import ru.krayseer.voyage.utils.dto.TripDtoFactory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,9 +34,9 @@ public class TripServiceImpl implements TripService {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final TripFactory tripFactory;
+    private final TripDtoFactory tripFactory;
 
-    private final FollowerFactory followerFactory;
+    private final FollowerDtoFactory followerFactory;
 
     @Override
     public List<TripResponse> loadAllTrips() {

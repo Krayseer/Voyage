@@ -12,7 +12,7 @@ import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.domain.repositories.CarRepository;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
 import ru.krayseer.voyage.services.CarService;
-import ru.krayseer.voyage.services.factories.CarFactory;
+import ru.krayseer.voyage.utils.dto.CarDtoFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class CarServiceImpl implements CarService {
 
     private final TripRepository tripRepository;
 
-    private final CarFactory carFactory;
+    private final CarDtoFactory carFactory;
 
     @Override
     public CarResponse loadCar(Long id) {

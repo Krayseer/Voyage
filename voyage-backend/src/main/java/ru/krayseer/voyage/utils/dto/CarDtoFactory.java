@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.services.factories;
+package ru.krayseer.voyage.utils.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import ru.krayseer.voyage.domain.repositories.AccountRepository;
 
 @Service
 @RequiredArgsConstructor
-public class CarFactory extends BaseFactory<Car, CarRequest> {
+public class CarDtoFactory extends BaseDtoFactory<Car, CarRequest> {
 
     private final AccountRepository accountRepository;
 

@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.services.factories;
+package ru.krayseer.voyage.utils.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class AccountFactory extends BaseFactory<Account, RegisterRequest> {
+public class AccountDtoFactory extends BaseDtoFactory<Account, RegisterRequest> {
 
     private final AccountRepository accountRepository;
 
