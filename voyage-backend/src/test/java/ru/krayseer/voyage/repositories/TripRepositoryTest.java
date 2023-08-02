@@ -2,9 +2,14 @@ package ru.krayseer.voyage.repositories;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.krayseer.voyage.VoyageApplication;
 import ru.krayseer.voyage.commons.constants.Role;
+import ru.krayseer.voyage.context.ContainersEnvironment;
 import ru.krayseer.voyage.domain.entities.Account;
 import ru.krayseer.voyage.domain.entities.Car;
 import ru.krayseer.voyage.domain.entities.Trip;
@@ -17,8 +22,10 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@DataJpaTest
-public class TripRepositoryTest {
+@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = VoyageApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class TripRepositoryTest extends ContainersEnvironment {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -37,43 +44,11 @@ public class TripRepositoryTest {
 
     @BeforeEach
     public void setup() {
-        user = createAccount("urepa", "ijnbgr1245", "Andrew", 25, "+79124251522", "rus@yandex.ru");
-        driver = createAccount("coolDriver", "poiiop1551", "Daniel", 21, "+79995992959", "driv@gmail.com");
+        user = createAccount("urepa", "ijnbgr1245", "Andrew", 25,
+                "+79124251522", "rus@yandex.ru");
+        driver = createAccount("coolDriver", "poiiop1551", "Daniel", 21,
+                "+79995992959", "driv@gmail.com");
         driverCar = createCar("solaris", "green", "А212КЕ", driver);
-    }
-
-    private Account createAccount(String username, String password, String name, int age, String phoneNumber, String email) {
-        return accountRepository.save(Account.builder()
-                .username(username)
-                .password(password)
-                .name(name)
-                .age(age)
-                .phoneNumber(phoneNumber)
-                .email(email)
-                .createdAt(LocalDateTime.now())
-                .role(Role.ROLE_USER)
-                .build());
-    }
-
-    private Car createCar(String mark, String color, String licensePlate, Account account) {
-        return carRepository.save(Car.builder()
-                .mark(mark)
-                .color(color)
-                .licensePlate(licensePlate)
-                .account(account)
-                .build());
-    }
-
-    private Trip createTrip(int price, String addressFrom, String addressTo, int countSeats, LocalDateTime timeTrip, Account driver, Car car) {
-        return tripRepository.save(Trip.builder()
-                .price(price)
-                .addressFrom(addressFrom)
-                .addressTo(addressTo)
-                .countSeats(countSeats)
-                .timeTrip(timeTrip)
-                .driver(driver)
-                .car(car)
-                .build());
     }
 
     @Test
@@ -117,6 +92,40 @@ public class TripRepositoryTest {
     @Test
     public void updateTripTest() {
         var trip = createTrip(500, "Ekb", "Moscow", 3, LocalDateTime.of(2023, 7, 1, 8, 30, 0), driver, driverCar);
+    }
+
+    private Account createAccount(String username, String password, String name, int age, String phoneNumber, String email) {
+        return accountRepository.save(Account.builder()
+                .username(username)
+                .password(password)
+                .name(name)
+                .age(age)
+                .phoneNumber(phoneNumber)
+                .email(email)
+                .createdAt(LocalDateTime.now())
+                .role(Role.ROLE_USER)
+                .build());
+    }
+
+    private Car createCar(String mark, String color, String licensePlate, Account account) {
+        return carRepository.save(Car.builder()
+                .mark(mark)
+                .color(color)
+                .licensePlate(licensePlate)
+                .account(account)
+                .build());
+    }
+
+    private Trip createTrip(int price, String addressFrom, String addressTo, int countSeats, LocalDateTime timeTrip, Account driver, Car car) {
+        return tripRepository.save(Trip.builder()
+                .price(price)
+                .addressFrom(addressFrom)
+                .addressTo(addressTo)
+                .countSeats(countSeats)
+                .timeTrip(timeTrip)
+                .driver(driver)
+                .car(car)
+                .build());
     }
 
 }

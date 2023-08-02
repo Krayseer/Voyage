@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.contexts.auxiliary;
+package ru.krayseer.voyage.services.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import ru.krayseer.voyage.commons.constants.ErrorCode;
 import ru.krayseer.voyage.commons.exceptions.ErrorResponse;
-import ru.krayseer.voyage.services.JwtService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,13 +19,14 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static ru.krayseer.voyage.commons.constants.JwtConst.INDEX_START_TOKEN_VALUE;
-import static ru.krayseer.voyage.commons.constants.JwtConst.START_TOKEN_TAG;
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private static final String START_TOKEN_TAG = "Bearer ";
+
+    private static final Integer INDEX_START_TOKEN_VALUE = 7;
 
     private final UserDetailsService userDetailsService;
 

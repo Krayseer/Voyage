@@ -11,7 +11,7 @@ import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
 import ru.krayseer.voyage.domain.dto.responses.AuthResponse;
 import ru.krayseer.voyage.domain.entities.Account;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
-import ru.krayseer.voyage.services.JwtService;
+import ru.krayseer.voyage.services.security.JwtService;
 
 import java.time.LocalDateTime;
 

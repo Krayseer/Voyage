@@ -1,7 +1,6 @@
-package ru.krayseer.voyage.services.impl;
+package ru.krayseer.voyage.services.security;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.krayseer.voyage.services.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,21 +15,27 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.function.Function;
 
-import static ru.krayseer.voyage.commons.constants.JwtConst.TOKEN_LIFE_CYCLE;
-
 @Slf4j
 @Service
-public class JwtServiceImpl implements JwtService {
+public class JwtService {
+
+    public static final Integer TOKEN_LIFE_CYCLE = 86_400_000;
 
     @Value("${SECRET_KEY}")
     private String SECRET_KEY;
 
-    @Override
+    /**
+     * Получить имя пользователя из токена
+     * @param token токен
+     * @return username пользователя
+     */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    @Override
+    /**
+     * Создать токен для пользователя
+     */
     public String generateToken(UserDetails userDetails) {
         return Jwts
                 .builder()
@@ -42,7 +47,9 @@ public class JwtServiceImpl implements JwtService {
                 .compact();
     }
 
-    @Override
+    /**
+     * Валидный ли токен
+     */
     public Boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) &&

@@ -21,12 +21,12 @@ import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.services.AccountService;
 import ru.krayseer.voyage.services.factories.AccountFactory;
 
-import static ru.krayseer.voyage.commons.constants.CommonEnums.PHOTO_REQUEST_PARAM_NAME;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
+
+    private static final String PHOTO_REQUEST_PARAM_NAME = "photo";
 
     @Value("${PHOTO_SERVICE_URL}")
     private String photoServiceUrl;

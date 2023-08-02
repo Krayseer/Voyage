@@ -2,9 +2,14 @@ package ru.krayseer.voyage.repositories;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.krayseer.voyage.VoyageApplication;
 import ru.krayseer.voyage.commons.constants.Role;
+import ru.krayseer.voyage.context.ContainersEnvironment;
 import ru.krayseer.voyage.domain.entities.Account;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
 
@@ -13,8 +18,10 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DataJpaTest
-public class AccountRepositoryTest {
+@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = VoyageApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class AccountRepositoryTest extends ContainersEnvironment {
 
     @Autowired
     private AccountRepository accountRepository;

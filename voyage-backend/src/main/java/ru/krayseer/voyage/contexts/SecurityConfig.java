@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.krayseer.voyage.contexts.auxiliary.JwtAuthenticationFilter;
+import ru.krayseer.voyage.services.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity

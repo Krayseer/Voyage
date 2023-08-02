@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+APP_PORT: 8888
+PHOTO_SERVICE_URL: http://localhost:5050/photo
+SECRET_ADMIN: 2550255
+SECRET_KEY: 2D4B6150645367556B58703273357638792F423F4528482B4D6251655468576D
