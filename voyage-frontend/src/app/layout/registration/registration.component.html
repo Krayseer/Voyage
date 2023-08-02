@@ -1,39 +1,36 @@
 <app-header></app-header>
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="register-labels">
+      <div class="register-label">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" formControlName="username">
+      </div>
 
-  <div>
-    <div>
-      <label for="username">Имя пользователя:</label>
-      <input type="text" id="username" formControlName="username">
-    </div>
+      <div class="register-label">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" formControlName="password">
+      </div>
 
-    <div>
-      <label for="password">Пароль:</label>
-      <input type="password" id="password" formControlName="password">
-    </div>
+
+      <div class="register-label">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" formControlName="name">
+      </div>
+
+      <div class="register-label">
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" formControlName="age">
+      </div>
+
+      <div class="register-label">
+        <label for="phoneNumber">Номер телефона:</label>
+        <input type="tel" id="phoneNumber" formControlName="phoneNumber">
+      </div>
+
+      <div class="register-label">
+        <label for="email">Почта:</label>
+        <input type="email" id="email" formControlName="email">
+      </div>
+    <button type="submit" [disabled]="userForm.invalid">Submit</button>
   </div>
-
-  <div>
-    <div>
-      <label for="name">Имя:</label>
-      <input type="text" id="name" formControlName="name">
-    </div>
-
-    <div>
-      <label for="age">Возраст:</label>
-      <input type="number" id="age" formControlName="age">
-    </div>
-
-    <div>
-      <label for="phoneNumber">Номер телефона:</label>
-      <input type="tel" id="phoneNumber" formControlName="phoneNumber">
-    </div>
-
-    <div>
-      <label for="email">Почта:</label>
-      <input type="email" id="email" formControlName="email">
-    </div>
-  </div>
-
-  <button type="submit" [disabled]="userForm.invalid">Submit</button>
 </form>

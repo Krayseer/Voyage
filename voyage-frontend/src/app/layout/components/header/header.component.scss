@@ -1,9 +1,54 @@
 .buttons {
   display: flex;
+  flex-direction: column;
   gap: 20px;
   justify-content: center;
 }
 
 header {
   margin-bottom: 100px;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #FFEB3B;
+  padding: 20px 10px;
+}
+
+header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+header a:hover {
+  background-color: #FBC02D;
+  color: #212121;
+}
+
+header a.active {
+  background-color: #FBC02D;
+}
+
+.circle {
+  width: 100px; /* Задайте желаемый размер круга */
+  height: 100px; /* Задайте желаемый размер круга */
+  border-radius: 50%;
+  overflow: hidden; /* Обрезаем все, что выходит за пределы круга */
+  position: relative; /* Позволяет корректно позиционировать вложенный элемент */
+}
+
+.circle img {
+  width: 100%; /* Изображение займет всю доступную ширину внутри круга */
+  height: 100%; /* Изображение займет всю доступную высоту внутри круга */
+  object-fit: cover; /* Изображение подстраивается по всему кругу без искажений */
+  position: absolute; /* Позволяет изображению быть абсолютно позиционированным внутри круга */
+  top: 0;
+  left: 0;
 }

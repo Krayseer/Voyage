@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.config;
+package ru.krayseer.voyage.contexts;
 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.event.ApplicationEventMulticaster;

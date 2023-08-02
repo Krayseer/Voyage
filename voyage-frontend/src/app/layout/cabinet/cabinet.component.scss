@@ -39,3 +39,14 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
+.auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  >button {
+    font-size: 20px;
+  }
+}

@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.config;
+package ru.krayseer.voyage.contexts.auxiliary;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import ru.krayseer.voyage.commons.constants.ErrorCode;
 import ru.krayseer.voyage.commons.exceptions.ErrorResponse;
-import ru.krayseer.voyage.commons.exceptions.errors.EmailAlreadyExistsError;
 import ru.krayseer.voyage.services.JwtService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +17,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import static ru.krayseer.voyage.commons.constants.JwtConst.INDEX_START_TOKEN_VALUE;
 import static ru.krayseer.voyage.commons.constants.JwtConst.START_TOKEN_TAG;

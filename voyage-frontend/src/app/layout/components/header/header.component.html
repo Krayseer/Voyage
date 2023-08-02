@@ -2,6 +2,10 @@
   <div class="buttons">
     <button routerLink="">На главную</button>
     <button routerLink="/trip">Поездки</button>
-    <button routerLink="/cabinet">Личный кабинет</button>
+  </div>
+  <div class="circle">
+    <a routerLink="/cabinet">
+      <img *ngIf="imageSource$ | async as imageSource;" [src]="imageSource" alt="Аватарка" class="avatar">
+    </a>
   </div>
 </header>

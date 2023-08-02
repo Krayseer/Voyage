@@ -67,15 +67,4 @@ public class Trip {
     @JoinColumn(name = "CAR_ID")
     private Car car;
 
-    @Override
-    public String toString() {
-        return "Trip (" +
-                "id=" + id +
-                ", price=" + price +
-                ", addressFrom='" + addressFrom + '\'' +
-                ", addressTo='" + addressTo + '\'' +
-                ", timeTrip=" + timeTrip +
-                ", driver_id=" + driver.getId() +
-                " )";
-    }
 }

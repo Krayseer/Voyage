@@ -7,7 +7,7 @@ import {
   HttpInterceptor,
   HttpRequest
 } from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, Observable, of, throwError} from "rxjs";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -27,8 +27,10 @@ export class TokenInterceptor implements HttpInterceptor {
     });
     return next.handle(authReq).pipe(
       catchError((error: any) => {
-        localStorage.clear();
-        return throwError(error);
+        if (error.error.errorCode === "AUTHENTICATION_ERROR") {
+          localStorage.clear();
+        }
+        return of();
       })
     );
   }

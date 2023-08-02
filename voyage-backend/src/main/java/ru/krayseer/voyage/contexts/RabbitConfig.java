@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.config;
+package ru.krayseer.voyage.contexts;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
