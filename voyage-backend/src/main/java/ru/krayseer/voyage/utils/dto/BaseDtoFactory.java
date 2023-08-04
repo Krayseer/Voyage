@@ -3,6 +3,11 @@ package ru.krayseer.voyage.utils.dto;
 import ru.krayseer.voyage.domain.dto.Request;
 import ru.krayseer.voyage.domain.dto.Response;
 
+/**
+ * Класс для создания Entity из request, и response из Entity
+ * @param <T> Класс Entity
+ * @param <R> Реализация Request для конкретного Entity
+ */
 public abstract class BaseDtoFactory<T, R extends Request> {
 
     /**

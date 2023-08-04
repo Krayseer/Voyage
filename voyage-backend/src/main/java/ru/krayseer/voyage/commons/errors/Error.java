@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.commons.exceptions;
+package ru.krayseer.voyage.commons.errors;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -19,7 +19,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    public static final Integer TOKEN_LIFE_CYCLE = 86_400_000;
+    private static final Integer TOKEN_LIFE_CYCLE = 86_400_000;
 
     @Value("${SECRET_KEY}")
     private String SECRET_KEY;

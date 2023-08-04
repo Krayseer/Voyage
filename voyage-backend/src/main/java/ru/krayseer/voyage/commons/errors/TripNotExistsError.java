@@ -1,7 +1,6 @@
-package ru.krayseer.voyage.commons.exceptions.errors;
+package ru.krayseer.voyage.commons.errors;
 
 import ru.krayseer.voyage.commons.constants.ErrorCode;
-import ru.krayseer.voyage.commons.exceptions.Error;
 
 public class TripNotExistsError extends Error {
 

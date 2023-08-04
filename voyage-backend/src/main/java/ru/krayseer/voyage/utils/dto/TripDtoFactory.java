@@ -1,8 +1,8 @@
 package ru.krayseer.voyage.utils.dto;
 
 import org.springframework.stereotype.Component;
-import ru.krayseer.voyage.commons.exceptions.errors.CarNotExistsError;
-import ru.krayseer.voyage.commons.exceptions.errors.AccountNotExistsError;
+import ru.krayseer.voyage.commons.errors.CarNotExistsError;
+import ru.krayseer.voyage.commons.errors.AccountNotExistsError;
 import ru.krayseer.voyage.domain.dto.requests.TripRequest;
 import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
 import ru.krayseer.voyage.domain.dto.responses.TripResponse;

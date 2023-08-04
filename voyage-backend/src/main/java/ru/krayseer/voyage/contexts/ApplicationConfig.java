@@ -5,7 +5,7 @@ import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.web.client.RestTemplate;
-import ru.krayseer.voyage.commons.exceptions.errors.UsernameNotFoundError;
+import ru.krayseer.voyage.commons.errors.UsernameNotFoundError;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

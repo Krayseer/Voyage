@@ -2,7 +2,7 @@ package ru.krayseer.voyage.utils.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.krayseer.voyage.commons.exceptions.errors.AccountNotExistsError;
+import ru.krayseer.voyage.commons.errors.AccountNotExistsError;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 import ru.krayseer.voyage.domain.entities.Account;

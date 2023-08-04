@@ -2,8 +2,8 @@ package ru.krayseer.voyage.utils.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.krayseer.voyage.commons.exceptions.errors.AccountNotExistsError;
-import ru.krayseer.voyage.commons.exceptions.errors.TripNotExistsError;
+import ru.krayseer.voyage.commons.errors.AccountNotExistsError;
+import ru.krayseer.voyage.commons.errors.TripNotExistsError;
 import ru.krayseer.voyage.domain.dto.requests.FollowerRequest;
 import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
 import ru.krayseer.voyage.domain.entities.Account;

@@ -2,8 +2,8 @@ package ru.krayseer.voyage.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import ru.krayseer.voyage.commons.exceptions.errors.SubscribeError;
-import ru.krayseer.voyage.commons.exceptions.errors.TripNotExistsError;
+import ru.krayseer.voyage.commons.errors.SubscribeError;
+import ru.krayseer.voyage.commons.errors.TripNotExistsError;
 import ru.krayseer.voyage.domain.dto.requests.FollowerRequest;
 import ru.krayseer.voyage.domain.dto.requests.TripRequest;
 import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
@@ -12,7 +12,6 @@ import ru.krayseer.voyage.domain.entities.Follower;
 import ru.krayseer.voyage.domain.entities.Trip;
 import ru.krayseer.voyage.domain.repositories.FollowerRepository;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
-import ru.krayseer.voyage.commons.events.DeleteTripEvent;
 import ru.krayseer.voyage.services.TripService;
 import ru.krayseer.voyage.utils.dto.FollowerDtoFactory;
 import ru.krayseer.voyage.utils.dto.TripDtoFactory;
@@ -87,7 +86,6 @@ public class TripServiceImpl implements TripService {
     public void deleteTrip(Long tripId) {
         var trip = tripRepository.findById(tripId).orElseThrow(TripNotExistsError::new);
         log.info("Delete trip with id: {}", tripId);
-        eventPublisher.publishEvent(new DeleteTripEvent(this, trip));
         tripRepository.deleteById(tripId);
     }
 

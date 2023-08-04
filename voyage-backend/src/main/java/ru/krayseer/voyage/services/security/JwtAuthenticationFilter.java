@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import ru.krayseer.voyage.commons.constants.ErrorCode;
-import ru.krayseer.voyage.commons.exceptions.ErrorResponse;
+import ru.krayseer.voyage.domain.dto.responses.ErrorResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -69,7 +69,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @SneakyThrows
     private void handleAuthenticationError(HttpServletResponse response) {
         log.error("Ошибка авторизации");
-        ErrorResponse errorResponse = new ErrorResponse("Необходимо авторизоваться", ErrorCode.AUTHENTICATION_ERROR);
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .message("Необходимо авторизоваться")
+                .errorCode(ErrorCode.AUTHENTICATION_ERROR)
+                .build();
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");

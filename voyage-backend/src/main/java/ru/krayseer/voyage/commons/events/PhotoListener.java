@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.commons.brokers;
+package ru.krayseer.voyage.commons.events;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,3 +13,4 @@ public class PhotoListener {
 //    }
 
 }
+
