@@ -12,7 +12,7 @@ import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.domain.repositories.CarRepository;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
 import ru.krayseer.voyage.services.CarService;
-import ru.krayseer.voyage.utils.dto.CarDtoFactory;
+import ru.krayseer.voyage.domain.mappers.CarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,29 +29,29 @@ public class CarServiceImpl implements CarService {
 
     private final TripRepository tripRepository;
 
-    private final CarDtoFactory carFactory;
+    private final CarMapper carMapper;
 
     @Override
     public CarResponse loadCar(Long id) {
         Car car = carRepository.findById(id).orElseThrow(CarNotExistsError::new);
         log.info("Load car with id: {}", id);
-        return carFactory.createResponse(car);
+        return carMapper.createResponse(car);
     }
 
     @Override
     public List<CarResponse> loadUserCars(String username) {
         Account account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
         log.info("Load \"{}\" cars", username);
-        return carRepository.findCarsByAccount(account).stream().map(carFactory::createResponse).toList();
+        return carRepository.findCarsByAccount(account).stream().map(carMapper::createResponse).toList();
     }
 
     @Override
     public CarResponse addUserCar(String username, CarRequest carRequest) {
         carRequest.setAccountUsername(username);
-        Car car = carFactory.createObjectFrom(carRequest);
+        Car car = carMapper.createEntity(carRequest);
         carRepository.save(car);
         log.info("Add car for user: {}", username);
-        return carFactory.createResponse(car);
+        return carMapper.createResponse(car);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class CarServiceImpl implements CarService {
         car.setLicensePlate(carRequest.getLicensePlate());
         carRepository.save(car);
         log.info("Update \"{}\" car with id {}", car.getAccount().getId(), car.getId());
-        return carFactory.createResponse(car);
+        return carMapper.createResponse(car);
     }
 
     @Override

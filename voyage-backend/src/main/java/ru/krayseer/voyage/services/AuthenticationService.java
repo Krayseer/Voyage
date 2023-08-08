@@ -11,7 +11,7 @@ public interface AuthenticationService {
      * @param request данные о пользователе
      * @return jwt токен авторизованного пользователя
      */
-    AuthResponse registerUser(RegisterRequest request) throws Exception;
+    AuthResponse registerUser(RegisterRequest request);
 
     /**
      * Регистрация администратора

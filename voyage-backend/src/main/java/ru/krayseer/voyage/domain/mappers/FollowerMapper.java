@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.utils.dto;
+package ru.krayseer.voyage.domain.mappers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import ru.krayseer.voyage.domain.repositories.TripRepository;
 
 @Component
 @RequiredArgsConstructor
-public class FollowerDtoFactory extends BaseDtoFactory<Follower, FollowerRequest> {
+public class FollowerMapper extends BaseMapper<Follower, FollowerRequest> {
 
     private final TripRepository tripRepository;
 
@@ -31,7 +31,7 @@ public class FollowerDtoFactory extends BaseDtoFactory<Follower, FollowerRequest
     }
 
     @Override
-    public Follower createObjectFrom(FollowerRequest followerRequest) {
+    public Follower createEntity(FollowerRequest followerRequest) {
         Trip trip = tripRepository.findById(followerRequest.getTripId()).orElseThrow(TripNotExistsError::new);
         Account account = accountRepository.findByUsername(followerRequest.getFollowerUsername())
                 .orElseThrow(AccountNotExistsError::new);

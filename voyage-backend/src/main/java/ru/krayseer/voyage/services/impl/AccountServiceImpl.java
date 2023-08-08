@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import ru.krayseer.voyage.ApplicationConfig;
 import ru.krayseer.voyage.commons.errors.AccountNotExistsError;
-import ru.krayseer.voyage.commons.errors.UsernameAlreadyExistsError;
+import ru.krayseer.voyage.commons.errors.UsernameNotFoundError;
 import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
 import ru.krayseer.voyage.domain.dto.responses.PhotoUploadResponse;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.services.AccountService;
-import ru.krayseer.voyage.utils.dto.AccountDtoFactory;
+import ru.krayseer.voyage.domain.mappers.AccountMapper;
 
 @Slf4j
 @Service
@@ -28,29 +29,28 @@ public class AccountServiceImpl implements AccountService {
 
     private static final String PHOTO_REQUEST_PARAM_NAME = "photo";
 
-    @Value("${PHOTO_SERVICE_URL}")
-    private String photoServiceUrl;
-
     private final AccountRepository accountRepository;
 
-    private final AccountDtoFactory accountFactory;
+    private final AccountMapper accountMapper;
 
     private final RestTemplate restTemplate;
+
+    private final ApplicationConfig applicationConfig;
 
     @Override
     public AccountResponse loadAccount(String username) {
         log.info("Load \"{}\" account", username);
         return accountRepository
                 .findByUsername(username)
-                .map(accountFactory::createAccountResponse)
-                .orElseThrow(UsernameAlreadyExistsError::new);
+                .map(accountMapper::createAccountResponse)
+                .orElseThrow(UsernameNotFoundError::new);
     }
 
     @Override
     public ResponseEntity<byte[]> getAccountAvatar(String username) {
         log.info("Load \"{}\" avatar", username);
         var account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
-        String url = photoServiceUrl + '/' + account.getAvatarUrl();
+        String url = applicationConfig.getPhotoServiceUrl() + '/' + account.getAvatarUrl();
         return restTemplate.getForEntity(url, byte[].class);
     }
 
@@ -70,8 +70,8 @@ public class AccountServiceImpl implements AccountService {
         });
 
         var requestEntity = new HttpEntity<>(body, headers);
-        var photoUrl = restTemplate.postForEntity(photoServiceUrl, requestEntity, String.class).getBody();
-        restTemplate.delete(photoServiceUrl + "/" + account.getAvatarUrl());
+        var photoUrl = restTemplate.postForEntity(applicationConfig.getPhotoServiceUrl(), requestEntity, String.class).getBody();
+        restTemplate.delete(applicationConfig.getPhotoServiceUrl() + "/" + account.getAvatarUrl());
         account.setAvatarUrl(photoUrl);
         accountRepository.save(account);
         log.info("Save new account avatar by \"{}\"", username);

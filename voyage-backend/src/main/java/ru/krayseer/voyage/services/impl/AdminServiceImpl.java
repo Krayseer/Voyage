@@ -6,7 +6,7 @@ import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
 import ru.krayseer.voyage.domain.entities.Account;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.services.AdminService;
-import ru.krayseer.voyage.utils.dto.AccountDtoFactory;
+import ru.krayseer.voyage.domain.mappers.AccountMapper;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ public class AdminServiceImpl implements AdminService {
 
     private final AccountRepository accountRepository;
 
-    private final AccountDtoFactory accountFactory;
+    private final AccountMapper accountMapper;
 
     @Override
     public List<AccountResponse> loadAllAccounts() {
-        return accountRepository.findAll().stream().map(accountFactory::createAccountResponse).toList();
+        return accountRepository.findAll().stream().map(accountMapper::createAccountResponse).toList();
     }
 
     @Override

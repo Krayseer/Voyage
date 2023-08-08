@@ -17,7 +17,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public AuthResponse register(@RequestBody @Valid RegisterRequest request) throws Exception {
+    public AuthResponse register(@RequestBody @Valid RegisterRequest request) {
         return authenticationService.registerUser(request);
     }
 

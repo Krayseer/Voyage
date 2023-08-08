@@ -1,7 +1,6 @@
 package ru.krayseer.voyage.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import ru.krayseer.voyage.commons.errors.SubscribeError;
 import ru.krayseer.voyage.commons.errors.TripNotExistsError;
 import ru.krayseer.voyage.domain.dto.requests.FollowerRequest;
@@ -13,8 +12,8 @@ import ru.krayseer.voyage.domain.entities.Trip;
 import ru.krayseer.voyage.domain.repositories.FollowerRepository;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
 import ru.krayseer.voyage.services.TripService;
-import ru.krayseer.voyage.utils.dto.FollowerDtoFactory;
-import ru.krayseer.voyage.utils.dto.TripDtoFactory;
+import ru.krayseer.voyage.domain.mappers.FollowerMapper;
+import ru.krayseer.voyage.domain.mappers.TripMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,25 +30,23 @@ public class TripServiceImpl implements TripService {
 
     private final FollowerRepository followersRepository;
 
-    private final ApplicationEventPublisher eventPublisher;
+    private final TripMapper tripMapper;
 
-    private final TripDtoFactory tripFactory;
-
-    private final FollowerDtoFactory followerFactory;
+    private final FollowerMapper followerMapper;
 
     @Override
     public List<TripResponse> loadAllTrips() {
         log.info("Load all trips");
-        return tripRepository.findAll().stream().map(tripFactory::createResponse).toList();
+        return tripRepository.findAll().stream().map(tripMapper::createResponse).toList();
     }
 
     @Override
     public TripResponse createNewTrip(String username, TripRequest tripRequest) {
         tripRequest.setDriverUsername(username);
-        Trip trip = tripFactory.createObjectFrom(tripRequest);
+        Trip trip = tripMapper.createEntity(tripRequest);
         tripRepository.save(trip);
         log.info("Save new trip with id: {}", trip.getId());
-        return tripFactory.createResponse(trip);
+        return tripMapper.createResponse(trip);
     }
 
     @Override
@@ -58,7 +55,7 @@ public class TripServiceImpl implements TripService {
         if(trip.getDriver().getUsername().equals(username)) {
             throw new SubscribeError();
         }
-        Follower follower = followerFactory.createObjectFrom(
+        Follower follower = followerMapper.createEntity(
                 FollowerRequest
                         .builder()
                         .tripId(tripId)
@@ -66,7 +63,7 @@ public class TripServiceImpl implements TripService {
                         .build());
         followersRepository.save(follower);
         log.info("Add follower with id {} on trip with id {}", tripId, follower.getId());
-        return followerFactory.createResponse(follower);
+        return followerMapper.createResponse(follower);
     }
 
     @Override
@@ -79,7 +76,7 @@ public class TripServiceImpl implements TripService {
         trip.setCountSeats(tripRequest.getCountSeats());
         tripRepository.save(trip);
         log.info("Update trip with id: {}", tripId);
-        return tripFactory.createResponse(trip);
+        return tripMapper.createResponse(trip);
     }
 
     @Override

@@ -1,3 +1,8 @@
+app:
+  photo-service-url: ${PHOTO_SERVICE_URL}
+  secret-key: ${SECRET_KEY}
+  secret-admin: ${SECRET-ADMIN}
+
 spring:
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${DB_NAME}

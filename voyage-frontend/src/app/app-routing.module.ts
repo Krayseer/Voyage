@@ -8,7 +8,7 @@ import {AuthorizationComponent} from "./layout/authorization/authorization.compo
 import {HomeComponent} from "./layout/home/home.component";
 import {UserCarsComponent} from "./layout/user-cars/user-cars.component";
 import {TripComponent} from "./layout/trip/trip.component";
-import {TripDetailsComponent} from "./layout/trip/trip-details/trip-details.component";
+import {ChatComponent} from "./layout/chat/chat.component";
 
 const routes: Routes = [
 
@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'register', component: RegistrationComponent},
   { path: 'auth', component: AuthorizationComponent },
   { path: 'user-cars', component: UserCarsComponent },
-  { path: 'trip', component: TripComponent }
+  { path: 'trip', component: TripComponent },
+  { path: 'chat', component: ChatComponent }
 
 ];
 

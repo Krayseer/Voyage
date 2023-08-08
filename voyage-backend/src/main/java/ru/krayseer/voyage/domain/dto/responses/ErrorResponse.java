@@ -7,7 +7,7 @@ import ru.krayseer.voyage.domain.dto.Response;
 
 @Data
 @Builder
-public class ErrorResponse implements Response{
+public class ErrorResponse implements Response {
 
     private String message;
 

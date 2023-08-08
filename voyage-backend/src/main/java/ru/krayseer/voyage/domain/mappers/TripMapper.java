@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.utils.dto;
+package ru.krayseer.voyage.domain.mappers;
 
 import org.springframework.stereotype.Component;
 import ru.krayseer.voyage.commons.errors.CarNotExistsError;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class TripDtoFactory extends BaseDtoFactory<Trip, TripRequest> {
+public class TripMapper extends BaseMapper<Trip, TripRequest> {
 
     private final AccountRepository accountRepository;
 
@@ -48,7 +48,7 @@ public class TripDtoFactory extends BaseDtoFactory<Trip, TripRequest> {
     }
 
     @Override
-    public Trip createObjectFrom(TripRequest tripRequest) {
+    public Trip createEntity(TripRequest tripRequest) {
         var account = accountRepository.findByUsername(tripRequest.getDriverUsername()).orElseThrow(AccountNotExistsError::new);
         var car = carRepository.findById(tripRequest.getCarId()).orElseThrow(CarNotExistsError::new);
         return Trip

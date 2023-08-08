@@ -1,5 +1,6 @@
 package ru.krayseer.voyage.services.impl;
 
+import ru.krayseer.voyage.ApplicationConfig;
 import ru.krayseer.voyage.commons.constants.Role;
 import ru.krayseer.voyage.domain.dto.requests.AuthenticationRequest;
 import ru.krayseer.voyage.domain.dto.requests.RegisterRequest;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-import ru.krayseer.voyage.utils.dto.AccountDtoFactory;
+import ru.krayseer.voyage.domain.mappers.AccountMapper;
 
 import java.util.Objects;
 
@@ -26,20 +27,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final AccountDtoFactory accountFactory;
+    private final AccountMapper accountMapper;
 
-    /**
-     * Секретный ключ для создания администратора
-     */
-    @Value("${SECRET_ADMIN}")
-    private Integer SECRET_ADMIN;
+    private final ApplicationConfig applicationConfig;
 
     public AuthResponse registerUser(RegisterRequest request) {
         return createAccount(request, ROLE_USER);
     }
 
     public AuthResponse registerAdmin(RegisterRequest request, Integer secret) {
-        if (!Objects.equals(secret, SECRET_ADMIN)) {
+        if (!Objects.equals(secret, applicationConfig.getSecretAdmin())) {
             throw new RuntimeException("invalid secret admin key");
         }
         return createAccount(request, ROLE_ADMIN);
@@ -50,7 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
         var account = accountRepository.findByUsername(request.getUsername()).orElseThrow();
-        return accountFactory.createResponse(account);
+        return accountMapper.createResponse(account);
     }
 
     /**
@@ -61,9 +58,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     private AuthResponse createAccount(RegisterRequest request, Role role) {
         request.setRole(role);
-        var account = accountFactory.createObjectFrom(request);
+        var account = accountMapper.createEntity(request);
         accountRepository.save(account);
-        return accountFactory.createResponse(account);
+        return accountMapper.createResponse(account);
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.utils.dto;
+package ru.krayseer.voyage.domain.mappers;
 
 import ru.krayseer.voyage.domain.dto.Request;
 import ru.krayseer.voyage.domain.dto.Response;
@@ -8,7 +8,7 @@ import ru.krayseer.voyage.domain.dto.Response;
  * @param <T> Класс Entity
  * @param <R> Реализация Request для конкретного Entity
  */
-public abstract class BaseDtoFactory<T, R extends Request> {
+public abstract class BaseMapper<T, R extends Request> {
 
     /**
      * @param object объект, из которого нужно создать response для пользователя
@@ -20,6 +20,6 @@ public abstract class BaseDtoFactory<T, R extends Request> {
      * @param request запрос, из которого нужно создать объект для БД
      * @return объект БД
      */
-    public abstract T createObjectFrom(R request);
+    public abstract T createEntity(R request);
 
 }

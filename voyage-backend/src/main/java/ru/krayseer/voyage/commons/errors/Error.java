@@ -6,7 +6,7 @@ import ru.krayseer.voyage.commons.constants.ErrorCode;
 
 @Getter
 @Setter
-public class Error extends RuntimeException {
+public abstract class Error extends RuntimeException {
 
     private ErrorCode errorCode;
     

@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.utils.dto;
+package ru.krayseer.voyage.domain.mappers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import ru.krayseer.voyage.domain.repositories.AccountRepository;
 
 @Service
 @RequiredArgsConstructor
-public class CarDtoFactory extends BaseDtoFactory<Car, CarRequest> {
+public class CarMapper extends BaseMapper<Car, CarRequest> {
 
     private final AccountRepository accountRepository;
 
@@ -28,7 +28,7 @@ public class CarDtoFactory extends BaseDtoFactory<Car, CarRequest> {
     }
 
     @Override
-    public Car createObjectFrom(CarRequest car) {
+    public Car createEntity(CarRequest car) {
         Account account = accountRepository.findByUsername(car.getAccountUsername())
                 .orElseThrow(AccountNotExistsError::new);
         return Car

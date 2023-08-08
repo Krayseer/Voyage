@@ -6,7 +6,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.krayseer.voyage.containers.PostgresTestContainer;
 
 @Testcontainers
-public class ContainersEnvironment {
+public abstract class ContainersEnvironment {
 
     @Container
     public static PostgreSQLContainer<PostgresTestContainer> postgreSQLContainer = PostgresTestContainer.getInstance();

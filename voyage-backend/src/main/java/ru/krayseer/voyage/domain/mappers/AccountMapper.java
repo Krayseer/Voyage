@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.utils.dto;
+package ru.krayseer.voyage.domain.mappers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class AccountDtoFactory extends BaseDtoFactory<Account, RegisterRequest> {
+public class AccountMapper extends BaseMapper<Account, RegisterRequest> {
 
     private final AccountRepository accountRepository;
 
@@ -32,7 +32,7 @@ public class AccountDtoFactory extends BaseDtoFactory<Account, RegisterRequest> 
                 .build();
     }
 
-    public Account createObjectFrom(RegisterRequest accountRequest) {
+    public Account createEntity(RegisterRequest accountRequest) {
         if (accountRepository.existsByUsername(accountRequest.getUsername())) {
             throw new UsernameAlreadyExistsError();
         } else if (accountRepository.existsByEmail(accountRequest.getEmail())) {

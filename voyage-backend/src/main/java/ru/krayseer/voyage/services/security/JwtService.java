@@ -1,14 +1,17 @@
 package ru.krayseer.voyage.services.security;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import ru.krayseer.voyage.ApplicationConfig;
 
 import java.security.Key;
 import java.util.Collections;
@@ -17,12 +20,12 @@ import java.util.function.Function;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
     private static final Integer TOKEN_LIFE_CYCLE = 86_400_000;
 
-    @Value("${SECRET_KEY}")
-    private String SECRET_KEY;
+    private final ApplicationConfig applicationConfig;
 
     /**
      * Получить имя пользователя из токена
@@ -70,7 +73,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(applicationConfig.getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
