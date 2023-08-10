@@ -1,7 +1,7 @@
 app:
   photo-service-url: ${PHOTO_SERVICE_URL}
   secret-key: ${SECRET_KEY}
-  secret-admin: ${SECRET-ADMIN}
+  secret-admin: ${SECRET_ADMIN}
 
 spring:
   datasource:

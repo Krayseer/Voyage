@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class AccountMapper extends BaseMapper<Account, RegisterRequest> {
+public class AccountMapper implements Mapper<Account, RegisterRequest> {
 
     private final AccountRepository accountRepository;
 

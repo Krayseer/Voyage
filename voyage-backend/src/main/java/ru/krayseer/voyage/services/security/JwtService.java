@@ -7,11 +7,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.krayseer.voyage.ApplicationConfig;
+import ru.krayseer.voyage.ApplicationProperties;
 
 import java.security.Key;
 import java.util.Collections;
@@ -25,7 +23,7 @@ public class JwtService {
 
     private static final Integer TOKEN_LIFE_CYCLE = 86_400_000;
 
-    private final ApplicationConfig applicationConfig;
+    private final ApplicationProperties applicationProperties;
 
     /**
      * Получить имя пользователя из токена
@@ -54,8 +52,7 @@ public class JwtService {
      * Валидный ли токен
      */
     public Boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return username.equals(userDetails.getUsername()) &&
+        return extractUsername(token).equals(userDetails.getUsername()) &&
                 !extractClaim(token, Claims::getExpiration).before(new Date());
     }
 
@@ -73,7 +70,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(applicationConfig.getSecretKey());
+        byte[] keyBytes = Decoders.BASE64.decode(applicationProperties.getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

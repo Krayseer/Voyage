@@ -3,7 +3,6 @@ package ru.krayseer.voyage.services.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.voyage.ApplicationConfig;
+import ru.krayseer.voyage.ApplicationProperties;
 import ru.krayseer.voyage.commons.errors.AccountNotExistsError;
 import ru.krayseer.voyage.commons.errors.UsernameNotFoundError;
 import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
@@ -35,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
 
     private final RestTemplate restTemplate;
 
-    private final ApplicationConfig applicationConfig;
+    private final ApplicationProperties applicationProperties;
 
     @Override
     public AccountResponse loadAccount(String username) {
@@ -50,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
     public ResponseEntity<byte[]> getAccountAvatar(String username) {
         log.info("Load \"{}\" avatar", username);
         var account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
-        String url = applicationConfig.getPhotoServiceUrl() + '/' + account.getAvatarUrl();
+        String url = applicationProperties.getPhotoServiceUrl() + '/' + account.getAvatarUrl();
         return restTemplate.getForEntity(url, byte[].class);
     }
 
@@ -70,8 +69,8 @@ public class AccountServiceImpl implements AccountService {
         });
 
         var requestEntity = new HttpEntity<>(body, headers);
-        var photoUrl = restTemplate.postForEntity(applicationConfig.getPhotoServiceUrl(), requestEntity, String.class).getBody();
-        restTemplate.delete(applicationConfig.getPhotoServiceUrl() + "/" + account.getAvatarUrl());
+        var photoUrl = restTemplate.postForEntity(applicationProperties.getPhotoServiceUrl(), requestEntity, String.class).getBody();
+        restTemplate.delete(applicationProperties.getPhotoServiceUrl() + "/" + account.getAvatarUrl());
         account.setAvatarUrl(photoUrl);
         accountRepository.save(account);
         log.info("Save new account avatar by \"{}\"", username);

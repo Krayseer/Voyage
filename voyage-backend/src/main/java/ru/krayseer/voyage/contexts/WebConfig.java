@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        final CorsConfiguration configuration = new CorsConfiguration();
+        CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
         configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -35,7 +35,7 @@ public class WebConfig implements WebMvcConfigurer {
                 HttpMethod.DELETE.name(),
                 HttpMethod.OPTIONS.name(),
                 HttpMethod.PATCH.name()));
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/", configuration);
         return source;
     }

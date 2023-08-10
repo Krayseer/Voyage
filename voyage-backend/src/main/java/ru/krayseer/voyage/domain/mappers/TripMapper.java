@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class TripMapper extends BaseMapper<Trip, TripRequest> {
+public class TripMapper implements Mapper<Trip, TripRequest> {
 
     private final AccountRepository accountRepository;
 

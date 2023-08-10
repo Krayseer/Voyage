@@ -9,12 +9,21 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 @ConfigurationProperties(prefix = "app")
-public class ApplicationConfig {
+public class ApplicationProperties {
 
+    /**
+     * URL сервиса по хранению фотографий (Shuttersky)
+     */
     private String photoServiceUrl;
 
+    /**
+     * Секретный ключ (JWT)
+     */
     private String secretKey;
 
+    /**
+     * Секретный ключ для создания администратора
+     */
     private Integer secretAdmin;
 
 }

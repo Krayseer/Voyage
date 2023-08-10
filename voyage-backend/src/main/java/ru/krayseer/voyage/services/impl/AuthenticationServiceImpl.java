@@ -1,6 +1,6 @@
 package ru.krayseer.voyage.services.impl;
 
-import ru.krayseer.voyage.ApplicationConfig;
+import ru.krayseer.voyage.ApplicationProperties;
 import ru.krayseer.voyage.commons.constants.Role;
 import ru.krayseer.voyage.domain.dto.requests.AuthenticationRequest;
 import ru.krayseer.voyage.domain.dto.requests.RegisterRequest;
@@ -8,7 +8,6 @@ import ru.krayseer.voyage.domain.dto.responses.AuthResponse;
 import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -29,14 +28,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AccountMapper accountMapper;
 
-    private final ApplicationConfig applicationConfig;
+    private final ApplicationProperties applicationProperties;
 
     public AuthResponse registerUser(RegisterRequest request) {
         return createAccount(request, ROLE_USER);
     }
 
     public AuthResponse registerAdmin(RegisterRequest request, Integer secret) {
-        if (!Objects.equals(secret, applicationConfig.getSecretAdmin())) {
+        if (!Objects.equals(secret, applicationProperties.getSecretAdmin())) {
             throw new RuntimeException("invalid secret admin key");
         }
         return createAccount(request, ROLE_ADMIN);

@@ -4,22 +4,22 @@ import ru.krayseer.voyage.domain.dto.Request;
 import ru.krayseer.voyage.domain.dto.Response;
 
 /**
- * Класс для создания Entity из request, и response из Entity
+ * Интерфейс для создания Entity из request, и response из Entity
  * @param <T> Класс Entity
  * @param <R> Реализация Request для конкретного Entity
  */
-public abstract class BaseMapper<T, R extends Request> {
+public interface Mapper<T, R extends Request> {
 
     /**
      * @param object объект, из которого нужно создать response для пользователя
      * @return созданный response из объекта
      */
-    public abstract Response createResponse(T object);
+    Response createResponse(T object);
 
     /**
      * @param request запрос, из которого нужно создать объект для БД
      * @return объект БД
      */
-    public abstract T createEntity(R request);
+    T createEntity(R request);
 
 }

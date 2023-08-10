@@ -11,7 +11,7 @@ import ru.krayseer.voyage.domain.repositories.AccountRepository;
 
 @Service
 @RequiredArgsConstructor
-public class CarMapper extends BaseMapper<Car, CarRequest> {
+public class CarMapper implements Mapper<Car, CarRequest> {
 
     private final AccountRepository accountRepository;
 

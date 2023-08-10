@@ -14,7 +14,7 @@ import ru.krayseer.voyage.domain.repositories.TripRepository;
 
 @Component
 @RequiredArgsConstructor
-public class FollowerMapper extends BaseMapper<Follower, FollowerRequest> {
+public class FollowerMapper implements Mapper<Follower, FollowerRequest> {
 
     private final TripRepository tripRepository;
 
