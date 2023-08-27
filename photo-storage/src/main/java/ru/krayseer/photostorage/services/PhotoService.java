@@ -27,6 +27,11 @@ public class PhotoService {
 
     private final RabbitProducer rabbit;
 
+    /**
+     * Получить фотографию по uuid
+     * @param uuid идентификатор фотографии
+     * @return фотография
+     */
     @SneakyThrows
     public ResponseEntity<Resource> getPhotoByUuid(@PathVariable String uuid) {
         Path filePath = Paths.get(STORAGE_PATH).resolve(uuid + ".jpg");
@@ -37,6 +42,11 @@ public class PhotoService {
                 .body(new UrlResource(filePath.toUri()));
     }
 
+    /**
+     * Сохранить фотографию в storage
+     * @param file фотография которую нужно сохранить
+     * @return uuid сохраненной фотографии
+     */
     public String savePhoto(MultipartFile file) {
         if(file.isEmpty()) {
             throw new RuntimeException("Выберите файл");
