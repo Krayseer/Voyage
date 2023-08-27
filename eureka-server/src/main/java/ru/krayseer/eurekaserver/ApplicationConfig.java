@@ -1,7 +1,9 @@
 package ru.krayseer.eurekaserver;
 
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.context.annotation.Configuration;
 
-@EnableDiscoveryClient
+@Configuration
+@EnableEurekaServer
 public class ApplicationConfig {
 }

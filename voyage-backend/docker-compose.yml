@@ -29,34 +29,11 @@ services:
       - SECRET_KEY=${SECRET_KEY_VOYAGE}
       - APP_PORT=${APP_PORT_VOYAGE}
 
-  shuttersky-db:
-    image: 'postgres'
-    container_name: shuttersky-db
+  rabbit:
+    image: 'rabbitmq'
+    container_name: rabbitmq
     ports:
-      - '${POSTGRES_PORT_SHUTTERSKY}:5432'
+      - '5672:5672'
     environment:
-      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${DB_NAME_SHUTTERSKY}
-
-  shuttersky:
-    image: 'krayseer/shuttersky'
-    container_name: shuttersky
-    ports:
-      - '${APP_PORT_SHUTTERSKY}:5050'
-    environment:
-      - DB_NAME=${DB_NAME_SHUTTERSKY}
-      - POSTGRES_HOST=${POSTGRES_HOST_SHUTTERSKY}
-      - POSTGRES_PORT=${POSTGRES_PORT_DEFAULT}
-      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - APP_PORT=${APP_PORT_SHUTTERSKY}
-
-#  rabbit:
-#    image: 'rabbitmq'
-#    container_name: rabbitmq
-#    ports:
-#      - '5672:5672'
-#    environment:
-#      - RABBITMQ_DEFAULT_USER=rabbit
-#      - RABBITMQ_DEFAULT_PASS=rabbit
+      - RABBITMQ_DEFAULT_USER=rabbit
+      - RABBITMQ_DEFAULT_PASS=rabbit
