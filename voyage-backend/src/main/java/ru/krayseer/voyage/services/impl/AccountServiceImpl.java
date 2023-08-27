@@ -21,6 +21,8 @@ import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.services.AccountService;
 import ru.krayseer.voyage.domain.mappers.AccountMapper;
 
+import java.util.UUID;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -70,14 +72,11 @@ public class AccountServiceImpl implements AccountService {
 
         var requestEntity = new HttpEntity<>(body, headers);
         var photoUrl = restTemplate.postForEntity(applicationProperties.getPhotoServiceUrl(), requestEntity, String.class).getBody();
-        restTemplate.delete(applicationProperties.getPhotoServiceUrl() + "/" + account.getAvatarUrl());
+//        restTemplate.delete(applicationProperties.getPhotoServiceUrl() + "/" + account.getAvatarUrl());
         account.setAvatarUrl(photoUrl);
         accountRepository.save(account);
-        log.info("Save new account avatar by \"{}\"", username);
-        return PhotoUploadResponse
-                .builder()
-                .photoUrl(photoUrl)
-                .build();
+        log.info("Save new account avatar for \"{}\"", username);
+        return PhotoUploadResponse.builder().photoUrl(photoUrl).build();
     }
 
 }

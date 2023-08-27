@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.contexts;
+package ru.krayseer.photostorage.contexts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
