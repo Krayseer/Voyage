@@ -2,14 +2,13 @@ package ru.krayseer.voyage.domain.mappers;
 
 import org.springframework.stereotype.Component;
 import ru.krayseer.voyage.commons.errors.CarNotExistsError;
-import ru.krayseer.voyage.commons.errors.AccountNotExistsError;
 import ru.krayseer.voyage.domain.dto.requests.TripRequest;
 import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
 import ru.krayseer.voyage.domain.dto.responses.TripResponse;
 import ru.krayseer.voyage.domain.entities.Trip;
 import lombok.RequiredArgsConstructor;
-import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.domain.repositories.CarRepository;
+import ru.krayseer.voyage.services.RemoteAccountService;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,25 +17,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TripMapper implements Mapper<Trip, TripRequest> {
 
-    private final AccountRepository accountRepository;
-
     private final CarRepository carRepository;
+
+    private final RemoteAccountService remoteAccountService;
 
     @Override
     public TripResponse createResponse(Trip trip) {
         List<FollowerResponse> tripFollowers = trip.getFollowers() == null ? Collections.emptyList() : trip.getFollowers()
                 .stream()
-                .map(follower -> FollowerResponse
-                        .builder()
-                        .username(follower.getAccount().getUsername())
-                        .name(follower.getAccount().getName())
-                        .phoneNumber(follower.getAccount().getPhoneNumber())
-                        .build())
+                .map(follower ->  {
+                    var followerAccount = remoteAccountService.getAccountInfo(follower.getAccountUsername());
+                    return FollowerResponse.builder()
+                            .username(followerAccount.getUsername())
+                            .name(followerAccount.getName())
+                            .phoneNumber(followerAccount.getPhoneNumber())
+                            .build();
+                })
                 .toList();
-        return TripResponse
-                .builder()
+        return TripResponse.builder()
                 .id(trip.getId())
-                .driverId(trip.getDriver().getId())
+                .driverUsername(trip.getDriverUsername())
                 .price(trip.getPrice())
                 .addressFrom(trip.getAddressFrom())
                 .addressTo(trip.getAddressTo())
@@ -49,16 +49,14 @@ public class TripMapper implements Mapper<Trip, TripRequest> {
 
     @Override
     public Trip createEntity(TripRequest tripRequest) {
-        var account = accountRepository.findByUsername(tripRequest.getDriverUsername()).orElseThrow(AccountNotExistsError::new);
         var car = carRepository.findById(tripRequest.getCarId()).orElseThrow(CarNotExistsError::new);
-        return Trip
-                .builder()
+        return Trip.builder()
                 .price(tripRequest.getPrice())
                 .addressFrom(tripRequest.getAddressFrom())
                 .addressTo(tripRequest.getAddressTo())
                 .countSeats(tripRequest.getCountSeats())
                 .timeTrip(tripRequest.getTimeTrip())
-                .driver(account)
+                .driverUsername(tripRequest.getDriverUsername())
                 .car(car)
                 .build();
     }

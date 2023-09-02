@@ -1,7 +1,7 @@
 package ru.krayseer.voyage.domain.dto.requests;
 
 import lombok.*;
-import ru.krayseer.voyage.commons.validations.interfaces.LicensePlate;
+import ru.krayseer.voyage.commons.validations.LicensePlate;
 
 import jakarta.validation.constraints.NotBlank;
 import ru.krayseer.voyage.domain.dto.Request;

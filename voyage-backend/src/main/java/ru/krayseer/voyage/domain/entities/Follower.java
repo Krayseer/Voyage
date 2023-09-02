@@ -26,8 +26,6 @@ public class Follower {
     /**
      * Попутчик
      */
-    @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID")
-    private Account account;
+    private String accountUsername;
 
 }

@@ -36,8 +36,6 @@ public class Car {
     /**
      * Хозяин автомобиля
      */
-    @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID")
-    private Account account;
+    private String accountUsername;
 
 }

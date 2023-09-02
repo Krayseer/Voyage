@@ -3,12 +3,10 @@ package ru.krayseer.voyage.services.impl;
 import lombok.extern.slf4j.Slf4j;
 import ru.krayseer.voyage.commons.errors.CarIsPresentError;
 import ru.krayseer.voyage.commons.errors.CarNotExistsError;
-import ru.krayseer.voyage.commons.errors.AccountNotExistsError;
+import ru.krayseer.voyage.commons.utils.JwtUtils;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
-import ru.krayseer.voyage.domain.entities.Account;
 import ru.krayseer.voyage.domain.entities.Car;
-import ru.krayseer.voyage.domain.repositories.AccountRepository;
 import ru.krayseer.voyage.domain.repositories.CarRepository;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
 import ru.krayseer.voyage.services.CarService;
@@ -25,11 +23,11 @@ public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
 
-    private final AccountRepository accountRepository;
-
     private final TripRepository tripRepository;
 
     private final CarMapper carMapper;
+
+    private final JwtUtils jwtUtils;
 
     @Override
     public CarResponse loadCar(Long id) {
@@ -39,14 +37,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarResponse> loadUserCars(String username) {
-        Account account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
+    public List<CarResponse> loadUserCars(String token) {
+        var username = jwtUtils.extractUsername(token);
         log.info("Load \"{}\" cars", username);
-        return carRepository.findCarsByAccount(account).stream().map(carMapper::createResponse).toList();
+        return carRepository.findCarsByAccountUsername(username).stream()
+                .map(carMapper::createResponse)
+                .toList();
     }
 
     @Override
-    public CarResponse addUserCar(String username, CarRequest carRequest) {
+    public CarResponse addUserCar(String token, CarRequest carRequest) {
+        var username = jwtUtils.extractUsername(token);
         carRequest.setAccountUsername(username);
         Car car = carMapper.createEntity(carRequest);
         carRepository.save(car);
@@ -61,7 +62,7 @@ public class CarServiceImpl implements CarService {
         car.setColor(carRequest.getColor());
         car.setLicensePlate(carRequest.getLicensePlate());
         carRepository.save(car);
-        log.info("Update \"{}\" car with id {}", car.getAccount().getId(), car.getId());
+        log.info("Update \"{}\" car with id {}", car.getAccountUsername(), car.getId());
         return carMapper.createResponse(car);
     }
 

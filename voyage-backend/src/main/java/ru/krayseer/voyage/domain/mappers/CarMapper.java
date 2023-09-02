@@ -2,25 +2,19 @@ package ru.krayseer.voyage.domain.mappers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.krayseer.voyage.commons.errors.AccountNotExistsError;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
-import ru.krayseer.voyage.domain.entities.Account;
 import ru.krayseer.voyage.domain.entities.Car;
-import ru.krayseer.voyage.domain.repositories.AccountRepository;
 
 @Service
 @RequiredArgsConstructor
 public class CarMapper implements Mapper<Car, CarRequest> {
 
-    private final AccountRepository accountRepository;
-
     @Override
     public CarResponse createResponse(Car car) {
-        return CarResponse
-                .builder()
+        return CarResponse.builder()
                 .id(car.getId())
-                .accountUsername(car.getAccount().getUsername())
+                .accountUsername(car.getAccountUsername())
                 .mark(car.getMark())
                 .color(car.getColor())
                 .licensePlate(car.getLicensePlate())
@@ -29,14 +23,11 @@ public class CarMapper implements Mapper<Car, CarRequest> {
 
     @Override
     public Car createEntity(CarRequest car) {
-        Account account = accountRepository.findByUsername(car.getAccountUsername())
-                .orElseThrow(AccountNotExistsError::new);
-        return Car
-                .builder()
+        return Car.builder()
                 .mark(car.getMark())
                 .color(car.getColor())
                 .licensePlate(car.getLicensePlate())
-                .account(account)
+                .accountUsername(car.getAccountUsername())
                 .build();
     }
 

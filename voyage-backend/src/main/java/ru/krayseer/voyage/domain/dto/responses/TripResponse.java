@@ -12,7 +12,7 @@ public class TripResponse implements Response {
 
     private Long id;
 
-    private Long driverId;
+    private String driverUsername;
 
     private Integer price;
 

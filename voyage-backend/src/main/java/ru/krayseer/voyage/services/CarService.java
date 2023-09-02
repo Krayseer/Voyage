@@ -15,18 +15,18 @@ public interface CarService {
 
     /**
      * Загрузить автомобили авторизованного пользователя
-     * @param username username пользователя
+     * @param token username пользователя
      * @return список автомобилей
      */
-    List<CarResponse> loadUserCars(String username);
+    List<CarResponse> loadUserCars(String token);
 
     /**
      * Добавить автомобиль авторизованному пользователю
-     * @param username username пользователя
+     * @param token username пользователя
      * @param carRequest данные о автомобиле
      * @return данные о сохраненном в БД автомобиле
      */
-    CarResponse addUserCar(String username, CarRequest carRequest);
+    CarResponse addUserCar(String token, CarRequest carRequest);
 
     /**
      * Обновить данные об автомобиле по id

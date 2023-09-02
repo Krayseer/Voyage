@@ -16,19 +16,19 @@ public interface TripService {
 
     /**
      * Создать поездку авторизованного пользователя
-     * @param username username пользователя, который создаёт поездку
+     * @param token username пользователя, который создаёт поездку
      * @param tripRequest данные о создаваемой поездке
      * @return данные о сохраненной в БД поездке
      */
-    TripResponse createNewTrip(String username, TripRequest tripRequest);
+    TripResponse createNewTrip(String token, TripRequest tripRequest);
 
     /**
      * Подписаться на поездку авторизованному пользователю
      * @param tripId id поездки, на которую хочет подписаться пользователь
-     * @param username username пользователя, который подписывается на поездку
+     * @param token username пользователя, который подписывается на поездку
      * @return данные о сохраненном в поездке подписчике
      */
-    FollowerResponse subscribeFollowerOnTrip(Long tripId, String username);
+    FollowerResponse subscribeFollowerOnTrip(Long tripId, String token);
 
     /**
      * Обновить поездку по id

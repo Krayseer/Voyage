@@ -1,5 +1,7 @@
 package ru.krayseer.voyage.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import ru.krayseer.voyage.commons.utils.Utils;
 import ru.krayseer.voyage.domain.dto.requests.TripRequest;
 import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
 import ru.krayseer.voyage.domain.dto.responses.TripResponse;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,19 +27,19 @@ public class TripController {
 
     @PostMapping
     public TripResponse createNewTrip(@RequestBody @Valid TripRequest tripRequest,
-                                      Principal principal) {
-        return tripService.createNewTrip(principal.getName(), tripRequest);
+                                      HttpServletRequest request) {
+        return tripService.createNewTrip(Utils.getTokenFromHeader(request), tripRequest);
     }
 
     @PostMapping("/follower/{id}")
     public FollowerResponse subscribeOnTrip(@PathVariable Long id,
-                                            Principal principal) {
-        return tripService.subscribeFollowerOnTrip(id, principal.getName());
+                                            HttpServletRequest request) {
+        return tripService.subscribeFollowerOnTrip(id, Utils.getTokenFromHeader(request));
     }
 
     @PutMapping("/{id}")
-    public TripResponse updateTrip(@PathVariable Long id,
-                                   @RequestBody @Valid TripRequest tripRequest) {
+    public TripResponse updateTrip(@RequestBody @Valid TripRequest tripRequest,
+                                   @PathVariable Long id) {
         return tripService.updateTrip(id, tripRequest);
     }
 

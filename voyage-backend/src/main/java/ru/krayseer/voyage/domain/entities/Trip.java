@@ -50,9 +50,7 @@ public class Trip {
     /**
      * Водитель
      */
-    @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID")
-    private Account driver;
+    private String driverUsername;
 
     /**
      * Попутчики

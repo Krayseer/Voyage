@@ -1,6 +1,8 @@
 package ru.krayseer.voyage.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import ru.krayseer.voyage.commons.utils.Utils;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 import ru.krayseer.voyage.services.CarService;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,14 +26,14 @@ public class CarController {
     }
 
     @GetMapping
-    public List<CarResponse> getPersonCars(Principal principal) {
-        return carService.loadUserCars(principal.getName());
+    public List<CarResponse> getPersonCars(HttpServletRequest request) {
+        return carService.loadUserCars(Utils.getTokenFromHeader(request));
     }
 
     @PostMapping
     public CarResponse createCar(@RequestBody @Valid CarRequest carRequest,
-                                 Principal principal) {
-        return carService.addUserCar(principal.getName(), carRequest);
+                                 HttpServletRequest request) {
+        return carService.addUserCar(Utils.getTokenFromHeader(request), carRequest);
     }
 
     @PutMapping("/{id}")
