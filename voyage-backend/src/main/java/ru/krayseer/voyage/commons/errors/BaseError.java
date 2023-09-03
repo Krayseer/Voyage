@@ -6,12 +6,15 @@ import ru.krayseer.voyage.commons.constants.ErrorCode;
 
 @Getter
 @Setter
-public abstract class Error extends RuntimeException {
+public class BaseError extends RuntimeException {
+
+    private String message;
 
     private ErrorCode errorCode;
     
-    public Error(String message, ErrorCode errorCode) {
+    public BaseError(String message, ErrorCode errorCode) {
         super(message);
+        this.message = message;
         this.errorCode = errorCode;
     }
 

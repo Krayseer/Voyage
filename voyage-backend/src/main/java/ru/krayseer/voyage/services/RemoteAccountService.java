@@ -6,4 +6,6 @@ public interface RemoteAccountService {
 
     AccountResponse getAccountInfo(String username);
 
+    String getAccountUsername(String authHeader);
+
 }

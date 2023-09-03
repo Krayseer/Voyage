@@ -1,6 +1,5 @@
 package ru.krayseer.accountservice.domain.dto.requests;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data

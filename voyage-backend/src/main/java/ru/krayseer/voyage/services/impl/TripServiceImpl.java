@@ -3,7 +3,6 @@ package ru.krayseer.voyage.services.impl;
 import lombok.extern.slf4j.Slf4j;
 import ru.krayseer.voyage.commons.errors.SubscribeError;
 import ru.krayseer.voyage.commons.errors.TripNotExistsError;
-import ru.krayseer.voyage.commons.utils.JwtUtils;
 import ru.krayseer.voyage.domain.dto.requests.FollowerRequest;
 import ru.krayseer.voyage.domain.dto.requests.TripRequest;
 import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
@@ -14,6 +13,7 @@ import ru.krayseer.voyage.domain.mappers.FollowerMapper;
 import ru.krayseer.voyage.domain.mappers.TripMapper;
 import ru.krayseer.voyage.domain.repositories.FollowerRepository;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
+import ru.krayseer.voyage.services.RemoteAccountService;
 import ru.krayseer.voyage.services.TripService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class TripServiceImpl implements TripService {
 
     private final FollowerMapper followerMapper;
 
-    private final JwtUtils jwtUtils;
+    private final RemoteAccountService remoteAccountService;
 
     @Override
     public List<TripResponse> loadAllTrips() {
@@ -44,8 +44,8 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public TripResponse createNewTrip(String token, TripRequest tripRequest) {
-        var username = jwtUtils.extractUsername(token);
+    public TripResponse createNewTrip(String authHeader, TripRequest tripRequest) {
+        var username = remoteAccountService.getAccountUsername(authHeader);
         tripRequest.setDriverUsername(username);
         Trip trip = tripMapper.createEntity(tripRequest);
         tripRepository.save(trip);
@@ -54,8 +54,8 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public FollowerResponse subscribeFollowerOnTrip(Long tripId, String token) {
-        var username = jwtUtils.extractUsername(token);
+    public FollowerResponse subscribeFollowerOnTrip(Long tripId, String authHeader) {
+        var username = remoteAccountService.getAccountUsername(authHeader);
         var trip = tripRepository.findById(tripId).orElseThrow(TripNotExistsError::new);
         if(trip.getDriverUsername().equals(username)) {
             throw new SubscribeError();

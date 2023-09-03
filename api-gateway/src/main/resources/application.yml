@@ -7,6 +7,13 @@ spring:
 
   cloud:
     gateway:
+      routes:
+        - id: voyage-backend
+          uri: lb://voyage-backend
+          predicates:
+            - Path=/**
+          filters:
+            - AuthenticationFilter
 
       discovery:
         locator:

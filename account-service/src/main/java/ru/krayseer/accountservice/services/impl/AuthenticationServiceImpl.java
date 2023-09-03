@@ -1,6 +1,7 @@
 package ru.krayseer.accountservice.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,7 @@ import ru.krayseer.accountservice.services.jwt.JwtService;
 import static ru.krayseer.accountservice.commons.enums.Role.ROLE_ADMIN;
 import static ru.krayseer.accountservice.commons.enums.Role.ROLE_USER;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -57,7 +59,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public void validateToken(String token) {
-        jwtService.isTokenValid(token, userDetailsService.loadUserByUsername(jwtService.extractUsername(token)));
+//        var username = jwtService.extractUsername(token);
+        log.info("validate token");
+//        jwtService.isTokenValid(token, userDetailsService.loadUserByUsername(username));
     }
 
 }

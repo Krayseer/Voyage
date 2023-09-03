@@ -20,7 +20,7 @@ public interface TripService {
      * @param tripRequest данные о создаваемой поездке
      * @return данные о сохраненной в БД поездке
      */
-    TripResponse createNewTrip(String token, TripRequest tripRequest);
+    TripResponse createNewTrip(String authHeader, TripRequest tripRequest);
 
     /**
      * Подписаться на поездку авторизованному пользователю
@@ -28,7 +28,7 @@ public interface TripService {
      * @param token username пользователя, который подписывается на поездку
      * @return данные о сохраненном в поездке подписчике
      */
-    FollowerResponse subscribeFollowerOnTrip(Long tripId, String token);
+    FollowerResponse subscribeFollowerOnTrip(Long tripId, String authHeader);
 
     /**
      * Обновить поездку по id

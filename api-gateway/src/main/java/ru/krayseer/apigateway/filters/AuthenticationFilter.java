@@ -1,11 +1,16 @@
 package ru.krayseer.apigateway.filters;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import ru.krayseer.apigateway.errors.*;
+import ru.krayseer.apigateway.errors.BaseError;
 import ru.krayseer.apigateway.services.RemoteAuthenticationService;
 
+@Slf4j
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
@@ -22,25 +27,21 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     @Override
     public GatewayFilter apply(Config config) {
-        return ((exchange, chain) -> {
+        return (exchange, chain) -> {
+            System.out.println("hello world");
             if (routeValidator.isSecured.test(exchange.getRequest())) {
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                    throw new RuntimeException("missing authorization header");
-                }
-
-                String authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-                if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                    authHeader = authHeader.substring(7);
+                    throw new MissingAuthHeaderError();
                 }
                 try {
-                    remoteAuthenticationService.validateToken(authHeader);
-                } catch (Exception e) {
-                    System.out.println("invalid access...!");
-                    throw new RuntimeException("un authorized access to application");
+                    var header = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
+                    remoteAuthenticationService.validateToken(header);
+                } catch (HttpClientErrorException exception) {
+                    throw new BaseError(exception);
                 }
             }
             return chain.filter(exchange);
-        });
+        };
     }
 
     public static class Config { }

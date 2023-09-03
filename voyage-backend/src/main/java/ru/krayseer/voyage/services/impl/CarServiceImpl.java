@@ -3,7 +3,6 @@ package ru.krayseer.voyage.services.impl;
 import lombok.extern.slf4j.Slf4j;
 import ru.krayseer.voyage.commons.errors.CarIsPresentError;
 import ru.krayseer.voyage.commons.errors.CarNotExistsError;
-import ru.krayseer.voyage.commons.utils.JwtUtils;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 import ru.krayseer.voyage.domain.entities.Car;
@@ -13,6 +12,7 @@ import ru.krayseer.voyage.services.CarService;
 import ru.krayseer.voyage.domain.mappers.CarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.krayseer.voyage.services.RemoteAccountService;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class CarServiceImpl implements CarService {
 
     private final CarMapper carMapper;
 
-    private final JwtUtils jwtUtils;
+    private final RemoteAccountService remoteAccountService;
 
     @Override
     public CarResponse loadCar(Long id) {
@@ -37,8 +37,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarResponse> loadUserCars(String token) {
-        var username = jwtUtils.extractUsername(token);
+    public List<CarResponse> loadUserCars(String header) {
+        var username = remoteAccountService.getAccountUsername(header);
         log.info("Load \"{}\" cars", username);
         return carRepository.findCarsByAccountUsername(username).stream()
                 .map(carMapper::createResponse)
@@ -46,8 +46,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarResponse addUserCar(String token, CarRequest carRequest) {
-        var username = jwtUtils.extractUsername(token);
+    public CarResponse addUserCar(String authHeader, CarRequest carRequest) {
+        var username = remoteAccountService.getAccountUsername(authHeader);
         carRequest.setAccountUsername(username);
         Car car = carMapper.createEntity(carRequest);
         carRepository.save(car);

@@ -9,7 +9,6 @@ import ru.krayseer.accountservice.commons.validations.EmailAddress;
 import ru.krayseer.accountservice.commons.validations.PhoneNumber;
 
 @Data
-@Builder
 public class RegisterRequest {
 
     @NotBlank(message = "нужно ввести username")

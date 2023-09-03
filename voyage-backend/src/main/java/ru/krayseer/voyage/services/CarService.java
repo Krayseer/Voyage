@@ -18,7 +18,7 @@ public interface CarService {
      * @param token username пользователя
      * @return список автомобилей
      */
-    List<CarResponse> loadUserCars(String token);
+    List<CarResponse> loadUserCars(String authHeader);
 
     /**
      * Добавить автомобиль авторизованному пользователю
@@ -26,7 +26,7 @@ public interface CarService {
      * @param carRequest данные о автомобиле
      * @return данные о сохраненном в БД автомобиле
      */
-    CarResponse addUserCar(String token, CarRequest carRequest);
+    CarResponse addUserCar(String authHeader, CarRequest carRequest);
 
     /**
      * Обновить данные об автомобиле по id

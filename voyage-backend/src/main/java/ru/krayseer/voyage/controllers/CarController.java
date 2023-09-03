@@ -1,8 +1,8 @@
 package ru.krayseer.voyage.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import ru.krayseer.voyage.commons.utils.Utils;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 import ru.krayseer.voyage.services.CarService;
@@ -27,13 +27,13 @@ public class CarController {
 
     @GetMapping
     public List<CarResponse> getPersonCars(HttpServletRequest request) {
-        return carService.loadUserCars(Utils.getTokenFromHeader(request));
+        return carService.loadUserCars(request.getHeader(HttpHeaders.AUTHORIZATION));
     }
 
     @PostMapping
     public CarResponse createCar(@RequestBody @Valid CarRequest carRequest,
                                  HttpServletRequest request) {
-        return carService.addUserCar(Utils.getTokenFromHeader(request), carRequest);
+        return carService.addUserCar(request.getHeader(HttpHeaders.AUTHORIZATION), carRequest);
     }
 
     @PutMapping("/{id}")

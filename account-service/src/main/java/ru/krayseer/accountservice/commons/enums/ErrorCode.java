@@ -33,6 +33,6 @@ public enum ErrorCode {
     /**
      * Ошибка авторизации
      */
-    AUTHENTICATION_ERROR
+    AUTHENTICATION_ERROR,
 
 }
