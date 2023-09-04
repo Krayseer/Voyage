@@ -7,13 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.krayseer.accountservice.commons.utils.Utils;
 import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.requests.AuthRequest;
-import ru.krayseer.accountservice.domain.dto.responses.AuthResponse;
 import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
 import ru.krayseer.accountservice.services.AuthenticationService;
-import ru.krayseer.accountservice.services.jwt.JwtService;
-
-import java.security.Principal;
-import java.util.PrimitiveIterator;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +16,6 @@ import java.util.PrimitiveIterator;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-
-    private final JwtService jwtService;
 
     @GetMapping("/validate")
     public boolean validateToken(@RequestParam String authHeader) {
@@ -36,8 +29,7 @@ public class AuthenticationController {
 
     @GetMapping("/username")
     public String getUsernameFromToken(HttpServletRequest request) {
-        var token = Utils.getTokenFromHeader(request);
-        return token == null ? null : jwtService.extractUsername(token);
+        return authenticationService.getUsernameFromToken(Utils.getTokenFromHeader(request));
     }
 
     @PostMapping("/register")

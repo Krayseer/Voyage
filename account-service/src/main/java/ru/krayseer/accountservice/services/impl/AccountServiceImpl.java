@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.krayseer.accountservice.commons.errors.AccountNotExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
-import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
+import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
 import ru.krayseer.accountservice.domain.mappers.AccountMapper;
 import ru.krayseer.accountservice.domain.repositories.AccountRepository;
@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     private final RemotePhotoService remotePhotoService;
 
     @Override
-    public AccountResponse loadAccount(String username) {
+    public Response loadAccount(String username) {
         log.info("Load \"{}\" account", username);
         return accountRepository
                 .findByUsername(username)
@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @SneakyThrows
-    public PhotoUploadResponse uploadAccountPhoto(MultipartFile multipartFile, String username) {
+    public Response uploadAccountPhoto(MultipartFile multipartFile, String username) {
         var account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
         var photoUrl = remotePhotoService.uploadPhotoInStorage(account, multipartFile);
         account.setAvatarUrl(photoUrl);

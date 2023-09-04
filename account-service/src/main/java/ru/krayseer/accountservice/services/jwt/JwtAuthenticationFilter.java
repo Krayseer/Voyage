@@ -35,7 +35,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) {
-        System.out.println("FILTTTTEEEEEEERRRRRRR");
         var authHeader = request.getHeader(AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith(START_TOKEN_TAG)) {
             filterChain.doFilter(request, response);

@@ -37,7 +37,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NotNull HttpServletRequest request,
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) {
-        System.out.println("IM IN FILTER BRO");
         var username = remoteAccountService.getAccountUsername(request.getHeader(AUTHORIZATION));
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var userDetails = userDetailsService.loadUserByUsername(username);

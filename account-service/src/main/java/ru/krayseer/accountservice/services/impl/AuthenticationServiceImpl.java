@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.commons.enums.Role;
 import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.requests.AuthRequest;
-import ru.krayseer.accountservice.domain.dto.responses.AuthResponse;
 import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
 import ru.krayseer.accountservice.domain.mappers.AccountMapper;
 import ru.krayseer.accountservice.domain.repositories.AccountRepository;
@@ -29,6 +28,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public Response authenticate(AuthRequest request) {
         return accountMapper.createResponse(request.getUsername());
+    }
+
+    @Override
+    public String getUsernameFromToken(String token) {
+        return token == null ? null : jwtService.extractUsername(token);
     }
 
     public Response registerUser(RegisterRequest request) {

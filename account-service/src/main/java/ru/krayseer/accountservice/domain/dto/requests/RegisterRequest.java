@@ -2,14 +2,14 @@ package ru.krayseer.accountservice.domain.dto.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
 import ru.krayseer.accountservice.commons.enums.Role;
 import ru.krayseer.accountservice.commons.validations.EmailAddress;
 import ru.krayseer.accountservice.commons.validations.PhoneNumber;
+import ru.krayseer.accountservice.domain.dto.Request;
 
 @Data
-public class RegisterRequest {
+public class RegisterRequest implements Request {
 
     @NotBlank(message = "нужно ввести username")
     private String username;

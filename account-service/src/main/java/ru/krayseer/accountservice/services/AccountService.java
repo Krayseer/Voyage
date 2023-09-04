@@ -1,21 +1,20 @@
 package ru.krayseer.accountservice.services;
 
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
-import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
+import ru.krayseer.accountservice.domain.dto.Response;
 
 public interface AccountService {
 
     /**
-     * Загрузить данные об авторизованном пользователе
-     * @param username username авторизованного пользователя
+     * Загрузить данные о пользователе
+     * @param username username  пользователя
      * @return данные об аккаунте
      */
-    AccountResponse loadAccount(String username);
+    Response loadAccount(String username);
 
     /**
      * Получить аватарку профиля из сервиса фотографий
-     * @param username username авторизованного пользователя
+     * @param username авторизованный пользователь
      * @return фотография
      */
     byte[] getAccountAvatar(String username);
@@ -23,9 +22,9 @@ public interface AccountService {
     /**
      * Загрузить аватарку профиля
      * @param multipartFile аватарка профиля
-     * @param username username авторизованного пользователя
+     * @param username авторизованный пользователь
      * @return ссылка на аватарку, которую можно использовать в сервисе фотографий
      */
-    PhotoUploadResponse uploadAccountPhoto(MultipartFile multipartFile, String username);
+    Response uploadAccountPhoto(MultipartFile multipartFile, String username);
 
 }

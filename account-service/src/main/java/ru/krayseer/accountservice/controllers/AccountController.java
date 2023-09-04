@@ -3,26 +3,25 @@ package ru.krayseer.accountservice.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
-import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
+import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.services.AccountService;
 
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/account")
 @RequiredArgsConstructor
+@RequestMapping("/account")
 public class AccountController {
 
     private final AccountService accountService;
 
     @GetMapping
-    public AccountResponse loadAuthorizedAccountData(Principal principal) {
+    public Response loadAuthorizedAccountData(Principal principal) {
         return accountService.loadAccount(principal.getName());
     }
 
     @GetMapping("/{username}")
-    public AccountResponse loadAccountByUsername(@PathVariable String username) {
+    public Response loadAccountByUsername(@PathVariable String username) {
         return accountService.loadAccount(username);
     }
 
@@ -37,13 +36,13 @@ public class AccountController {
     }
 
     @PostMapping("/photo")
-    public PhotoUploadResponse uploadAuthorizedAccountPhoto(@RequestParam("photo") MultipartFile multipartFile,
+    public Response uploadAuthorizedAccountPhoto(@RequestParam("photo") MultipartFile multipartFile,
                                                             Principal principal) {
         return accountService.uploadAccountPhoto(multipartFile, principal.getName());
     }
 
     @PostMapping("/photo/{username}")
-    public PhotoUploadResponse uploadAccountPhotoByUsername(@PathVariable String username,
+    public Response uploadAccountPhotoByUsername(@PathVariable String username,
                                                             @RequestParam("photo") MultipartFile multipartFile) {
         return accountService.uploadAccountPhoto(multipartFile, username);
     }
