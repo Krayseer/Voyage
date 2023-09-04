@@ -37,8 +37,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarResponse> loadUserCars(String header) {
-        var username = remoteAccountService.getAccountUsername(header);
+    public List<CarResponse> loadUserCars(String username) {
         log.info("Load \"{}\" cars", username);
         return carRepository.findCarsByAccountUsername(username).stream()
                 .map(carMapper::createResponse)
@@ -46,8 +45,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarResponse addUserCar(String authHeader, CarRequest carRequest) {
-        var username = remoteAccountService.getAccountUsername(authHeader);
+    public CarResponse addUserCar(String username, CarRequest carRequest) {
         carRequest.setAccountUsername(username);
         Car car = carMapper.createEntity(carRequest);
         carRepository.save(car);

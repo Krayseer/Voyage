@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,19 +27,19 @@ public class CarController {
     }
 
     @GetMapping
-    public List<CarResponse> getPersonCars(HttpServletRequest request) {
-        return carService.loadUserCars(request.getHeader(HttpHeaders.AUTHORIZATION));
+    public List<CarResponse> getPersonCars(Principal principal) {
+        return carService.loadUserCars(principal.getName());
     }
 
     @PostMapping
     public CarResponse createCar(@RequestBody @Valid CarRequest carRequest,
-                                 HttpServletRequest request) {
-        return carService.addUserCar(request.getHeader(HttpHeaders.AUTHORIZATION), carRequest);
+                                 Principal principal) {
+        return carService.addUserCar(principal.getName(), carRequest);
     }
 
     @PutMapping("/{id}")
-    public CarResponse updateCar(@PathVariable Long id,
-                                 @RequestBody @Valid CarRequest carRequest) {
+    public CarResponse updateCar(@RequestBody @Valid CarRequest carRequest,
+                                 @PathVariable Long id) {
         return carService.updateCar(id, carRequest);
     }
 

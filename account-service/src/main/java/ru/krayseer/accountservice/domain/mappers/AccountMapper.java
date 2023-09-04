@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.commons.errors.EmailAlreadyExistsError;
 import ru.krayseer.accountservice.commons.errors.PhoneNumberAlreadyExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameAlreadyExistsError;
+import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
 import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
 import ru.krayseer.accountservice.domain.dto.responses.AuthResponse;
 import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
@@ -26,7 +27,11 @@ public class AccountMapper {
     private final JwtService jwtService;
 
     public AuthResponse createResponse(String username) {
+        var account = accountRepository.findByUsername(username).orElseThrow(UsernameNotFoundError::new);
         return AuthResponse.builder()
+                .username(account.getUsername())
+                .password(account.getPassword())
+                .role(account.getRole())
                 .token(jwtService.generateToken(username))
                 .build();
     }

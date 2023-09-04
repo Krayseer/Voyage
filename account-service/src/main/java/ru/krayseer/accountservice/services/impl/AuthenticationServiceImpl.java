@@ -2,11 +2,9 @@ package ru.krayseer.accountservice.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.commons.enums.Role;
+import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.requests.AuthRequest;
 import ru.krayseer.accountservice.domain.dto.responses.AuthResponse;
 import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
@@ -25,43 +23,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AccountRepository accountRepository;
 
-    private final AuthenticationManager authenticationManager;
+    private final AccountMapper accountMapper;
 
     private final JwtService jwtService;
 
-    private final AccountMapper accountMapper;
-
-    private final UserDetailsService userDetailsService;
-
-    public AuthResponse authenticate(AuthRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-        );
+    public Response authenticate(AuthRequest request) {
         return accountMapper.createResponse(request.getUsername());
     }
 
-    public AuthResponse registerUser(RegisterRequest request) {
+    public Response registerUser(RegisterRequest request) {
         return createAccount(request, ROLE_USER);
     }
 
-    public AuthResponse registerAdmin(RegisterRequest request, Integer secret) {
+    public Response registerAdmin(RegisterRequest request, Integer secret) {
 //        if (!Objects.equals(secret, .getSecretAdmin())) {
 //            throw new RuntimeException("invalid secret admin key");
 //        }
         return createAccount(request, ROLE_ADMIN);
     }
 
-    private AuthResponse createAccount(RegisterRequest request, Role role) {
+    private Response createAccount(RegisterRequest request, Role role) {
         request.setRole(role);
         var account = accountMapper.createEntity(request);
         accountRepository.save(account);
         return accountMapper.createResponse(account.getUsername());
     }
 
-    public void validateToken(String token) {
-//        var username = jwtService.extractUsername(token);
-        log.info("validate token");
-//        jwtService.isTokenValid(token, userDetailsService.loadUserByUsername(username));
+    public boolean validateToken(String header) {
+        var token = header.substring(7);
+        return jwtService.isTokenValid(token);
+    }
+
+    public Response getAccountAuthInfo(String username) {
+        return accountMapper.createResponse(username);
     }
 
 }

@@ -6,7 +6,6 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
-import ru.krayseer.apigateway.errors.*;
 import ru.krayseer.apigateway.errors.BaseError;
 import ru.krayseer.apigateway.services.RemoteAuthenticationService;
 
@@ -28,10 +27,10 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            System.out.println("hello world");
             if (routeValidator.isSecured.test(exchange.getRequest())) {
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                    throw new MissingAuthHeaderError();
+                    System.out.println("im here");
+                    return chain.filter(exchange);
                 }
                 try {
                     var header = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);

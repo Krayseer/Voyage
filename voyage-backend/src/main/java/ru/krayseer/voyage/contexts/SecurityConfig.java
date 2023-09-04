@@ -1,4 +1,4 @@
-package ru.krayseer.accountservice.contexts;
+package ru.krayseer.voyage.contexts;
 
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
-import ru.krayseer.accountservice.domain.repositories.AccountRepository;
-import ru.krayseer.accountservice.services.jwt.JwtAuthenticationFilter;
+import ru.krayseer.voyage.domain.entities.CustomUserDetails;
+import ru.krayseer.voyage.commons.filters.AuthenticationFilter;
+import ru.krayseer.voyage.services.RemoteAccountService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,26 +26,25 @@ public class SecurityConfig {
 
     @Bean
     @SneakyThrows
-    public SecurityFilterChain securityFilterChain(JwtAuthenticationFilter jwtAuthenticationFilter,
-                                                   AuthenticationProvider authenticationProvider,
+    public SecurityFilterChain securityFilterChain(AuthenticationProvider authenticationProvider,
+                                                   AuthenticationFilter authenticationFilter,
                                                    HttpSecurity http) {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService(AccountRepository accountRepository) {
-        return username -> accountRepository.findByUsername(username).orElseThrow(UsernameNotFoundError::new);
+    public UserDetailsService userDetailsService(RemoteAccountService remoteAccountService) {
+        return username -> new CustomUserDetails(remoteAccountService.getAccountAuthInfo(username));
     }
 
     @Bean
@@ -60,11 +59,6 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 }

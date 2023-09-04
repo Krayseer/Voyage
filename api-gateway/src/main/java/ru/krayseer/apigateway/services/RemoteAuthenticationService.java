@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,8 +16,8 @@ public class RemoteAuthenticationService {
     public void validateToken(String header) {
         var headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION, header);
-        var url = "http://localhost:8765/account-service/auth/validate";
-        restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), ResponseEntity.class);
+        var url = String.format("http://localhost:8765/account-service/auth/validate?authHeader=%s", header);
+        restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Boolean.class);
     }
 
 }

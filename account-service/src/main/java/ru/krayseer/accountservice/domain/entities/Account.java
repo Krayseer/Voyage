@@ -2,14 +2,9 @@ package ru.krayseer.accountservice.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import ru.krayseer.accountservice.commons.enums.Role;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
 
 @Entity
 @Getter
@@ -17,7 +12,7 @@ import java.util.Collections;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account implements UserDetails {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,40 +67,5 @@ public class Account implements UserDetails {
      */
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(role.name()));
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
 }

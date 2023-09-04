@@ -25,4 +25,9 @@ public enum ErrorCode {
      */
     TRIP_NOT_EXISTS,
 
+    /**
+     * Ошибка авторизации
+     */
+    AUTHENTICATION_ERROR
+
 }

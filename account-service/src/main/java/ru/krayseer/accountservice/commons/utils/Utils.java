@@ -3,10 +3,13 @@ package ru.krayseer.accountservice.commons.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.http.HttpHeaders;
 
+import java.util.Objects;
+
 public final class Utils {
 
     public static String getTokenFromHeader(HttpServletRequest request) {
-        return request.getHeader(HttpHeaders.AUTHORIZATION).substring(7);
+        var header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        return !Objects.equals(header, "") ? header.substring(7) : null;
     }
 
 }

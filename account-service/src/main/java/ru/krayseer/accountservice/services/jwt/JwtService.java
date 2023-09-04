@@ -2,12 +2,9 @@ package ru.krayseer.accountservice.services.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.ApplicationConfig;
 
@@ -15,6 +12,9 @@ import java.security.Key;
 import java.util.Collections;
 import java.util.Date;
 import java.util.function.Function;
+
+import static io.jsonwebtoken.SignatureAlgorithm.HS256;
+import static io.jsonwebtoken.io.Decoders.BASE64;
 
 @Slf4j
 @Service
@@ -43,16 +43,15 @@ public class JwtService {
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_LIFE_CYCLE))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInKey(), HS256)
                 .compact();
     }
 
     /**
      * Валидный ли токен
      */
-    public Boolean isTokenValid(String token, UserDetails userDetails) {
-        return extractUsername(token).equals(userDetails.getUsername()) &&
-                !extractClaim(token, Claims::getExpiration).before(new Date());
+    public Boolean isTokenValid(String token) {
+        return !extractClaim(token, Claims::getExpiration).before(new Date());
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -68,7 +67,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(applicationConfig.getSecretKey());
+        byte[] keyBytes = BASE64.decode(applicationConfig.getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

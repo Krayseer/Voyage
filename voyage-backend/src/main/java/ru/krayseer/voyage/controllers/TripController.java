@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -27,14 +28,14 @@ public class TripController {
 
     @PostMapping
     public TripResponse createNewTrip(@RequestBody @Valid TripRequest tripRequest,
-                                      HttpServletRequest request) {
-        return tripService.createNewTrip(request.getHeader(HttpHeaders.AUTHORIZATION), tripRequest);
+                                      Principal principal) {
+        return tripService.createNewTrip(principal.getName(), tripRequest);
     }
 
     @PostMapping("/follower/{id}")
     public FollowerResponse subscribeOnTrip(@PathVariable Long id,
-                                            HttpServletRequest request) {
-        return tripService.subscribeFollowerOnTrip(id, request.getHeader(HttpHeaders.AUTHORIZATION));
+                                            Principal principal) {
+        return tripService.subscribeFollowerOnTrip(id, principal.getName());
     }
 
     @PutMapping("/{id}")

@@ -14,6 +14,8 @@ import ru.krayseer.accountservice.ApplicationConfig;
 import ru.krayseer.accountservice.domain.entities.Account;
 import ru.krayseer.accountservice.services.RemotePhotoService;
 
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA;
+
 @Service
 @RequiredArgsConstructor
 public class RemotePhotoServiceImpl implements RemotePhotoService {
@@ -33,7 +35,7 @@ public class RemotePhotoServiceImpl implements RemotePhotoService {
     @SneakyThrows
     public String uploadPhotoInStorage(Account account, MultipartFile multipartFile) {
         var headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setContentType(MULTIPART_FORM_DATA);
 
         var body = new LinkedMultiValueMap<>();
         body.add(PHOTO_REQUEST_PARAM_NAME, new ByteArrayResource(multipartFile.getBytes()) {

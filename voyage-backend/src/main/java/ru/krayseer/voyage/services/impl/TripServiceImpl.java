@@ -13,7 +13,6 @@ import ru.krayseer.voyage.domain.mappers.FollowerMapper;
 import ru.krayseer.voyage.domain.mappers.TripMapper;
 import ru.krayseer.voyage.domain.repositories.FollowerRepository;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
-import ru.krayseer.voyage.services.RemoteAccountService;
 import ru.krayseer.voyage.services.TripService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +34,6 @@ public class TripServiceImpl implements TripService {
 
     private final FollowerMapper followerMapper;
 
-    private final RemoteAccountService remoteAccountService;
-
     @Override
     public List<TripResponse> loadAllTrips() {
         log.info("Load all trips");
@@ -44,8 +41,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public TripResponse createNewTrip(String authHeader, TripRequest tripRequest) {
-        var username = remoteAccountService.getAccountUsername(authHeader);
+    public TripResponse createNewTrip(String username, TripRequest tripRequest) {
         tripRequest.setDriverUsername(username);
         Trip trip = tripMapper.createEntity(tripRequest);
         tripRepository.save(trip);
@@ -54,8 +50,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public FollowerResponse subscribeFollowerOnTrip(Long tripId, String authHeader) {
-        var username = remoteAccountService.getAccountUsername(authHeader);
+    public FollowerResponse subscribeFollowerOnTrip(Long tripId, String username) {
         var trip = tripRepository.findById(tripId).orElseThrow(TripNotExistsError::new);
         if(trip.getDriverUsername().equals(username)) {
             throw new SubscribeError();
