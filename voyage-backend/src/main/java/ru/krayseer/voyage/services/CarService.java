@@ -1,5 +1,6 @@
 package ru.krayseer.voyage.services;
 
+import ru.krayseer.voyage.domain.dto.Response;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 
@@ -11,10 +12,11 @@ public interface CarService {
      * @param id идентификатор автомобиля
      * @return данные об автомобиле
      */
-    CarResponse loadCar(Long id);
+    Response loadCar(Long id);
 
     /**
      * Загрузить автомобили авторизованного пользователя
+     *
      * @param token username пользователя
      * @return список автомобилей
      */
@@ -26,7 +28,7 @@ public interface CarService {
      * @param carRequest данные о автомобиле
      * @return данные о сохраненном в БД автомобиле
      */
-    CarResponse addUserCar(String username, CarRequest carRequest);
+    Response addUserCar(String username, CarRequest carRequest);
 
     /**
      * Обновить данные об автомобиле по id
@@ -34,7 +36,7 @@ public interface CarService {
      * @param carRequest обновлённые данные
      * @return данные о сохраненном в БД автомобиле
      */
-    CarResponse updateCar(Long carId, CarRequest carRequest);
+    Response updateCar(Long carId, CarRequest carRequest);
 
     /**
      * Удалить автомобиль, если данный автомобиль не зарегистрирован в поездке

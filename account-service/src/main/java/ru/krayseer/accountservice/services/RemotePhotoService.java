@@ -1,5 +1,6 @@
 package ru.krayseer.accountservice.services;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import ru.krayseer.accountservice.domain.entities.Account;
 
@@ -10,7 +11,7 @@ public interface RemotePhotoService {
      * @param account аккаунт, аватарку которого нужно загрузить
      * @return изображение (аватарка)
      */
-    byte[] getAccountPhotoFromStorage(Account account);
+    ResponseEntity<byte[]> getAccountPhotoFromStorage(Account account);
 
     /**
      * Загрузить в сервис фотографий аватарку профиля пользователя

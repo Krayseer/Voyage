@@ -1,7 +1,8 @@
 package ru.krayseer.voyage.services;
 
+import ru.krayseer.voyage.domain.dto.Response;
 import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
-import ru.krayseer.voyage.domain.dto.responses.AuthInfo;
+import ru.krayseer.voyage.domain.dto.responses.AuthResponse;
 
 public interface RemoteAccountService {
 
@@ -9,6 +10,6 @@ public interface RemoteAccountService {
 
     String getAccountUsername(String authHeader);
 
-    AuthInfo getAccountAuthInfo(String username);
+    AuthResponse getAccountAuthInfo(String username);
 
 }

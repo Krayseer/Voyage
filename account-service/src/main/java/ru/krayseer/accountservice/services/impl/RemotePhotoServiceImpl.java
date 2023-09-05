@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -25,9 +26,9 @@ public class RemotePhotoServiceImpl implements RemotePhotoService {
 
     private final RestTemplate restTemplate;
 
-    public byte[] getAccountPhotoFromStorage(Account account) {
+    public ResponseEntity<byte[]> getAccountPhotoFromStorage(Account account) {
         String url = applicationConfig.getPhotoServiceUrl() + '/' + account.getAvatarUrl();
-        return restTemplate.getForEntity(url, byte[].class).getBody();
+        return restTemplate.getForEntity(url, byte[].class);
     }
 
     @Override

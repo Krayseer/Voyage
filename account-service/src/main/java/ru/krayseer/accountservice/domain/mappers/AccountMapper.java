@@ -1,18 +1,20 @@
 package ru.krayseer.accountservice.domain.mappers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.commons.errors.EmailAlreadyExistsError;
 import ru.krayseer.accountservice.commons.errors.PhoneNumberAlreadyExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameAlreadyExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
+import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
 import ru.krayseer.accountservice.domain.dto.responses.AuthResponse;
 import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
 import ru.krayseer.accountservice.domain.entities.Account;
 import ru.krayseer.accountservice.domain.repositories.AccountRepository;
-import ru.krayseer.accountservice.services.jwt.JwtService;
+import ru.krayseer.accountservice.services.RedisService;
 
 import java.time.LocalDateTime;
 
@@ -24,15 +26,15 @@ public class AccountMapper {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final JwtService jwtService;
+    private final RedisService redisService;
 
-    public AuthResponse createResponse(String username) {
+    public Response createResponse(String username) {
         var account = accountRepository.findByUsername(username).orElseThrow(UsernameNotFoundError::new);
         return AuthResponse.builder()
                 .username(account.getUsername())
                 .password(account.getPassword())
                 .role(account.getRole())
-                .token(jwtService.generateToken(username))
+                .token(redisService.getUsernameToken(username))
                 .build();
     }
 

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.krayseer.voyage.domain.dto.responses.AuthInfo;
+import ru.krayseer.voyage.domain.dto.responses.AuthResponse;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -14,21 +14,21 @@ import java.util.Collections;
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private AuthInfo authInfo;
+    private AuthResponse authResponse;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(authInfo.getRole()));
+        return Collections.singleton(new SimpleGrantedAuthority(authResponse.getRole()));
     }
 
     @Override
     public String getPassword() {
-        return authInfo.getPassword();
+        return authResponse.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return authInfo.getUsername();
+        return authResponse.getUsername();
     }
 
     @Override

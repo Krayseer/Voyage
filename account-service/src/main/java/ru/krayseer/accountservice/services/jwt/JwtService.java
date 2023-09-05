@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.ApplicationConfig;
 
@@ -21,7 +22,7 @@ import static io.jsonwebtoken.io.Decoders.BASE64;
 @RequiredArgsConstructor
 public class JwtService {
 
-    private static final Integer TOKEN_LIFE_CYCLE = 86_400_000;
+    public static final Integer TOKEN_LIFE_CYCLE = 86_400_000;
 
     private final ApplicationConfig applicationConfig;
 

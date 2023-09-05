@@ -1,8 +1,7 @@
 package ru.krayseer.voyage.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import ru.krayseer.voyage.domain.dto.Response;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 import ru.krayseer.voyage.services.CarService;
@@ -22,7 +21,7 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping("/{id}")
-    public CarResponse getCarById(@PathVariable Long id) {
+    public Response getCarById(@PathVariable Long id) {
         return carService.loadCar(id);
     }
 
@@ -32,14 +31,14 @@ public class CarController {
     }
 
     @PostMapping
-    public CarResponse createCar(@RequestBody @Valid CarRequest carRequest,
-                                 Principal principal) {
+    public Response createCar(@RequestBody @Valid CarRequest carRequest,
+                              Principal principal) {
         return carService.addUserCar(principal.getName(), carRequest);
     }
 
     @PutMapping("/{id}")
-    public CarResponse updateCar(@RequestBody @Valid CarRequest carRequest,
-                                 @PathVariable Long id) {
+    public Response updateCar(@RequestBody @Valid CarRequest carRequest,
+                              @PathVariable Long id) {
         return carService.updateCar(id, carRequest);
     }
 

@@ -1,4 +1,4 @@
-package ru.krayseer.voyage;
+package ru.krayseer.photostorage;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 public class ApplicationConfig {
 
     /**
-     * URL сервиса по хранению фотографий
+     * Место хранения фотографий
      */
-    private String photoServiceUrl;
+    private String storagePath;
 
 }

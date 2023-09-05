@@ -1,5 +1,6 @@
 package ru.krayseer.voyage.services;
 
+import ru.krayseer.voyage.domain.dto.Response;
 import ru.krayseer.voyage.domain.dto.requests.TripRequest;
 import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
 import ru.krayseer.voyage.domain.dto.responses.TripResponse;
@@ -20,7 +21,7 @@ public interface TripService {
      * @param tripRequest данные о создаваемой поездке
      * @return данные о сохраненной в БД поездке
      */
-    TripResponse createNewTrip(String username, TripRequest tripRequest);
+    Response createNewTrip(String username, TripRequest tripRequest);
 
     /**
      * Подписаться на поездку авторизованному пользователю
@@ -28,7 +29,7 @@ public interface TripService {
      * @param token username пользователя, который подписывается на поездку
      * @return данные о сохраненном в поездке подписчике
      */
-    FollowerResponse subscribeFollowerOnTrip(Long tripId, String username);
+    Response subscribeFollowerOnTrip(Long tripId, String username);
 
     /**
      * Обновить поездку по id
@@ -36,7 +37,7 @@ public interface TripService {
      * @param tripRequest измененные данные о поездке
      * @return данные об обновленной в БД поездке
      */
-    TripResponse updateTrip(Long tripId, TripRequest tripRequest);
+    Response updateTrip(Long tripId, TripRequest tripRequest);
 
     /**
      * Удалить поездку

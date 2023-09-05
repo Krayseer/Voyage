@@ -4,8 +4,6 @@ server:
 
 app:
   photo-service-url: ${PHOTO_SERVICE_URL}
-  secret-key: ${SECRET_KEY}
-  secret-admin: ${SECRET_ADMIN}
 
 spring:
   application:

@@ -1,9 +1,10 @@
 package ru.krayseer.voyage.domain.dto.responses;
 
 import lombok.Data;
+import ru.krayseer.voyage.domain.dto.Response;
 
 @Data
-public class AuthInfo {
+public class AuthResponse implements Response {
 
     private String username;
 

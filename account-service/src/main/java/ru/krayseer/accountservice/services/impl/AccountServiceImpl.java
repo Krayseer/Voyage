@@ -1,18 +1,22 @@
 package ru.krayseer.accountservice.services.impl;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.krayseer.accountservice.commons.errors.AccountNotExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
+import ru.krayseer.accountservice.commons.utils.Utils;
 import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
 import ru.krayseer.accountservice.domain.mappers.AccountMapper;
 import ru.krayseer.accountservice.domain.repositories.AccountRepository;
 import ru.krayseer.accountservice.services.AccountService;
 import ru.krayseer.accountservice.services.RemotePhotoService;
+import ru.krayseer.accountservice.services.jwt.JwtService;
 
 @Slf4j
 @Service
@@ -25,6 +29,8 @@ public class AccountServiceImpl implements AccountService {
 
     private final RemotePhotoService remotePhotoService;
 
+    private final JwtService jwtService;
+
     @Override
     public Response loadAccount(String username) {
         log.info("Load \"{}\" account", username);
@@ -35,11 +41,23 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Response loadAccount(HttpServletRequest request) {
+        var username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+        return loadAccount(username);
+    }
+
+    @Override
     @SneakyThrows
-    public byte[] getAccountAvatar(String username) {
+    public ResponseEntity<byte[]> getAccountAvatar(String username) {
         log.info("Load \"{}\" avatar", username);
         var account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
         return remotePhotoService.getAccountPhotoFromStorage(account);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> getAccountAvatar(HttpServletRequest request) {
+        var username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+        return getAccountAvatar(username);
     }
 
     @Override
@@ -53,6 +71,12 @@ public class AccountServiceImpl implements AccountService {
         return PhotoUploadResponse.builder()
                 .photoUrl(photoUrl)
                 .build();
+    }
+
+    @Override
+    public Response uploadAccountPhoto(MultipartFile multipartFile, HttpServletRequest request) {
+        var username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+        return uploadAccountPhoto(multipartFile, username);
     }
 
 }
