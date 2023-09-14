@@ -8,9 +8,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Aspect
 @Component
-@Slf4j
 @RequiredArgsConstructor
 public class LogControllerAdvice {
 
@@ -18,7 +18,7 @@ public class LogControllerAdvice {
 
     @Before("execution(* ru.krayseer.accountservice.controllers.*Controller.*(..))")
     public void logBefore() {
-        var endpoint = request.getRequestURI();
+        String endpoint = request.getRequestURI();
         log.info("START endpoint: {}", endpoint);
     }
 

@@ -5,19 +5,19 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import ru.krayseer.accountservice.commons.enums.RegExp;
+import ru.krayseer.accountservice.commons.constants.RegExp;
 
 import java.lang.annotation.*;
 
-@NotBlank(message = "phoneNumber должен быть заполнен")
-@Pattern(regexp = RegExp.PHONE_NUMBER, message = "некорректный телефонный номер")
-@Target({ElementType.FIELD, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
 @Documented
+@Constraint(validatedBy = {})
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD, ElementType.METHOD})
+@NotBlank(message = "phoneNumber must be filled in")
+@Pattern(regexp = RegExp.PHONE_NUMBER, message = "invalid phone number")
 public @interface PhoneNumber {
 
-    String message() default "неверно введён телефонный номер";
+    String message() default "phone number entered incorrectly";
 
     Class<?>[] groups() default {};
 

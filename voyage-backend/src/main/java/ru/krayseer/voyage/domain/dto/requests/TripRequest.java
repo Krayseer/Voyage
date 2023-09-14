@@ -9,7 +9,8 @@ import ru.krayseer.voyage.domain.dto.Request;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TripRequest implements Request {
 
     @NotNull(message = "нужно ввести цену поездки")

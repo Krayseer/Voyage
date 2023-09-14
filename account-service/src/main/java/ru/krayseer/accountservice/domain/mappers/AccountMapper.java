@@ -1,7 +1,6 @@
 package ru.krayseer.accountservice.domain.mappers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.commons.errors.EmailAlreadyExistsError;
@@ -22,14 +21,14 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AccountMapper {
 
-    private final AccountRepository accountRepository;
+    private final RedisService redisService;
 
     private final PasswordEncoder passwordEncoder;
 
-    private final RedisService redisService;
+    private final AccountRepository accountRepository;
 
     public Response createResponse(String username) {
-        var account = accountRepository.findByUsername(username).orElseThrow(UsernameNotFoundError::new);
+        Account account = accountRepository.findByUsername(username).orElseThrow(UsernameNotFoundError::new);
         return AuthResponse.builder()
                 .username(account.getUsername())
                 .password(account.getPassword())

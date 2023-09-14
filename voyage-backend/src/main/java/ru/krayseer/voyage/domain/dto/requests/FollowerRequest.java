@@ -5,7 +5,8 @@ import lombok.*;
 import ru.krayseer.voyage.domain.dto.Request;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FollowerRequest implements Request {
 
     private Long tripId;

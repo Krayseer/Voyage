@@ -1,11 +1,11 @@
 package ru.krayseer.accountservice.commons.errors;
 
-import ru.krayseer.accountservice.commons.enums.ErrorCode;
+import ru.krayseer.accountservice.commons.constants.ErrorCode;
 
-public class AccountNotExistsError extends Error {
+public class AccountNotExistsError extends BaseError {
 
     public AccountNotExistsError() {
-        super("Такого аккаунта не существует", ErrorCode.ACCOUNT_NOT_EXISTS);
+        super("this account does not exist", ErrorCode.ACCOUNT_NOT_EXISTS);
     }
 
 }

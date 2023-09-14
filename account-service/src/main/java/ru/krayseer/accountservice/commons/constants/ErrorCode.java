@@ -1,4 +1,4 @@
-package ru.krayseer.accountservice.commons.enums;
+package ru.krayseer.accountservice.commons.constants;
 
 /**
  * Коды ошибок для response

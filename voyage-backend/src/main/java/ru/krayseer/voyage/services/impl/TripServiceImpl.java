@@ -56,12 +56,7 @@ public class TripServiceImpl implements TripService {
         if(trip.getDriverUsername().equals(username)) {
             throw new SubscribeError();
         }
-        Follower follower = followerMapper.createEntity(
-                FollowerRequest.builder()
-                        .tripId(tripId)
-                        .followerUsername(username)
-                        .build()
-        );
+        Follower follower = followerMapper.createEntity(new FollowerRequest(tripId, username));
         followersRepository.save(follower);
         log.info("Add follower with id {} on trip with id {}", tripId, follower.getId());
         return followerMapper.createResponse(follower);

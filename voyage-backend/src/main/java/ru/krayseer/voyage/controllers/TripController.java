@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import ru.krayseer.voyage.utils.SecurityUtils;
 
 import java.security.Principal;
 import java.util.List;
@@ -25,15 +26,13 @@ public class TripController {
     }
 
     @PostMapping
-    public Response createNewTrip(@RequestBody @Valid TripRequest tripRequest,
-                                  Principal principal) {
-        return tripService.createNewTrip(principal.getName(), tripRequest);
+    public Response createNewTrip(@RequestBody @Valid TripRequest tripRequest) {
+        return tripService.createNewTrip(SecurityUtils.getUsername(), tripRequest);
     }
 
     @PostMapping("/follower/{id}")
-    public Response subscribeOnTrip(@PathVariable Long id,
-                                    Principal principal) {
-        return tripService.subscribeFollowerOnTrip(id, principal.getName());
+    public Response subscribeOnTrip(@PathVariable Long id) {
+        return tripService.subscribeFollowerOnTrip(id, SecurityUtils.getUsername());
     }
 
     @PutMapping("/{id}")

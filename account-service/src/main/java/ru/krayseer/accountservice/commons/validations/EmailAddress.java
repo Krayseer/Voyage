@@ -8,16 +8,16 @@ import jakarta.validation.constraints.Size;
 
 import java.lang.annotation.*;
 
-@NotBlank
 @Email
-@Size(max = 100)
-@Target({ElementType.FIELD, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
+@NotBlank
 @Documented
+@Size(max = 100)
+@Constraint(validatedBy = {})
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface EmailAddress {
 
-    String message() default "некорректный email адрес";
+    String message() default "incorrect email address";
 
     Class<?>[] groups() default {};
 

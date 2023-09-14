@@ -21,19 +21,14 @@ public class TripMapper implements Mapper<Trip, TripRequest> {
 
     private final RemoteAccountService remoteAccountService;
 
+    private final FollowerMapper followerMapper;
+
     @Override
     public TripResponse createResponse(Trip trip) {
-        List<FollowerResponse> tripFollowers = trip.getFollowers() == null ? Collections.emptyList() : trip.getFollowers()
-                .stream()
-                .map(follower ->  {
-                    var followerAccount = remoteAccountService.getAccountInfo(follower.getAccountUsername());
-                    return FollowerResponse.builder()
-                            .username(followerAccount.getUsername())
-                            .name(followerAccount.getName())
-                            .phoneNumber(followerAccount.getPhoneNumber())
-                            .build();
-                })
-                .toList();
+        List<FollowerResponse> tripFollowers = trip.getFollowers() == null ? Collections.emptyList() :
+                trip.getFollowers().stream()
+                        .map(followerMapper::createResponse)
+                        .toList();
         return TripResponse.builder()
                 .id(trip.getId())
                 .driverUsername(trip.getDriverUsername())

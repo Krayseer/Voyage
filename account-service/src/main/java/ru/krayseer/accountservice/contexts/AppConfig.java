@@ -18,7 +18,7 @@ public class AppConfig {
 
     @Bean
     public ObjectMapper objectMapper() {
-        var objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }

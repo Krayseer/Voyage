@@ -7,7 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import ru.krayseer.voyage.domain.dto.Request;
 
 @Data
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CarRequest implements Request {
 
     @NotBlank(message = "нужно ввести марку машины")

@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.krayseer.accountservice.commons.utils.Utils;
+import ru.krayseer.accountservice.utils.Utils;
 import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.requests.AuthRequest;
 import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
@@ -39,8 +39,8 @@ public class AuthenticationController {
 
     @PostMapping("/admin")
     public Response createAdmin(@RequestBody @Valid RegisterRequest request,
-                                @RequestParam Integer secret) {
-        return authenticationService.registerAdmin(request, secret);
+                                @RequestParam String secretAdmin) {
+        return authenticationService.registerAdmin(request, secretAdmin);
     }
 
     @PostMapping("/authenticate")

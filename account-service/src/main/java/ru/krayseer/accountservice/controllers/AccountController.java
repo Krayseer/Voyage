@@ -5,11 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.accountservice.commons.utils.Utils;
 import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.services.AccountService;
-
-import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor

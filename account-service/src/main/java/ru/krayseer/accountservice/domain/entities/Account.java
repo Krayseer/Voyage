@@ -2,7 +2,7 @@ package ru.krayseer.accountservice.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.krayseer.accountservice.commons.enums.Role;
+import ru.krayseer.accountservice.commons.constants.Role;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Account {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

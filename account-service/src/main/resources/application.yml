@@ -2,8 +2,9 @@ server:
   port: 0
 
 app:
-  photo-service-url: ${PHOTO_SERVICE_URL}
   secret-key: ${SECRET_KEY}
+  secret-admin: ${SECRET_ADMIN}
+  token-line-cycle: ${TOKEN_LIFE_CYCLE}
 
 spring:
   application:

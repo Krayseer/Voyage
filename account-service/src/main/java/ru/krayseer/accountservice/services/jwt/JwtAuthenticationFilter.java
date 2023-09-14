@@ -15,16 +15,14 @@ import ru.krayseer.accountservice.domain.dto.responses.ErrorResponse;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-import static ru.krayseer.accountservice.commons.enums.ErrorCode.AUTHENTICATION_ERROR;
+import static ru.krayseer.accountservice.commons.constants.ErrorCode.AUTHENTICATION_ERROR;
+import static ru.krayseer.accountservice.commons.constants.SecurityConstants.INDEX_START_TOKEN_VALUE;
+import static ru.krayseer.accountservice.commons.constants.SecurityConstants.START_TOKEN_TAG;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
-    private static final String START_TOKEN_TAG = "Bearer ";
-
-    private static final Integer INDEX_START_TOKEN_VALUE = 7;
 
     private final JwtService jwtService;
 
@@ -55,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void handleAuthenticationError(HttpServletResponse response) {
         log.error("Ошибка авторизации");
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .message("Необходимо авторизоваться")
+                .message("You must sing up")
                 .errorCode(AUTHENTICATION_ERROR)
                 .build();
         response.setStatus(UNAUTHORIZED.value());

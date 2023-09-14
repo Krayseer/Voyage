@@ -12,13 +12,18 @@ import org.springframework.stereotype.Component;
 public class ApplicationConfig {
 
     /**
-     * URL сервиса по хранению фотографий (Shuttersky)
+     * Секретный ключ для создания администратора
      */
-    private String photoServiceUrl;
+    private String secretAdmin;
 
     /**
      * Секретный ключ (JWT)
      */
     private String secretKey;
+
+    /**
+     * Время жизни токена
+     */
+    private Long tokenLifeCycle;
 
 }

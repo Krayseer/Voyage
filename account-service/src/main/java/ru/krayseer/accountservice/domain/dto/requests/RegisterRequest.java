@@ -3,7 +3,7 @@ package ru.krayseer.accountservice.domain.dto.requests;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import ru.krayseer.accountservice.commons.enums.Role;
+import ru.krayseer.accountservice.commons.constants.Role;
 import ru.krayseer.accountservice.commons.validations.EmailAddress;
 import ru.krayseer.accountservice.commons.validations.PhoneNumber;
 import ru.krayseer.accountservice.domain.dto.Request;
@@ -11,24 +11,45 @@ import ru.krayseer.accountservice.domain.dto.Request;
 @Data
 public class RegisterRequest implements Request {
 
-    @NotBlank(message = "нужно ввести username")
+    /**
+     * Пользователь
+     */
+    @NotBlank(message = "you need to enter username")
     private String username;
 
-    @NotBlank(message = "нужно ввести пароль")
+    /**
+     * Пароль
+     */
+    @NotBlank(message = "you need to enter password")
     private String password;
 
-    @NotBlank(message = "нужно ввести имя")
+    /**
+     * Имя
+     */
+    @NotBlank(message = "you need to enter name")
     private String name;
 
-    @NotNull(message = "нужно ввести возраст")
+    /**
+     * Возраст
+     */
+    @NotNull(message = "you need to enter age")
     private Integer age;
 
+    /**
+     * Телефонный номер
+     */
     @PhoneNumber
     private String phoneNumber;
 
+    /**
+     * Электронная почта
+     */
     @EmailAddress
     private String email;
 
+    /**
+     * Роль
+     */
     private Role role;
 
 }

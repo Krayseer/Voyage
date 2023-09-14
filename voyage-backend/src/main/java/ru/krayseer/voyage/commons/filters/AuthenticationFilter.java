@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.krayseer.voyage.domain.dto.responses.ErrorResponse;
 import ru.krayseer.voyage.services.RemoteAccountService;
+import ru.krayseer.voyage.utils.SecurityUtils;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -38,13 +39,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) {
         var username = remoteAccountService.getAccountUsername(request.getHeader(AUTHORIZATION));
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            var userDetails = userDetailsService.loadUserByUsername(username);
-            var authToken = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities()
-            );
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+        if (username != null && !SecurityUtils.isAuthentication()) {
+            SecurityUtils.authenticate(userDetailsService.loadUserByUsername(username), request);
         } else {
             handleAuthenticationError(response);
             return;

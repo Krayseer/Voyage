@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.ApplicationConfig;
 
@@ -21,8 +20,6 @@ import static io.jsonwebtoken.io.Decoders.BASE64;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
-
-    public static final Integer TOKEN_LIFE_CYCLE = 86_400_000;
 
     private final ApplicationConfig applicationConfig;
 
@@ -43,7 +40,7 @@ public class JwtService {
                 .setClaims(Collections.emptyMap())
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_LIFE_CYCLE))
+                .setExpiration(new Date(System.currentTimeMillis() + applicationConfig.getTokenLifeCycle()))
                 .signWith(getSignInKey(), HS256)
                 .compact();
     }

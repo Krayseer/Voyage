@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import ru.krayseer.voyage.utils.SecurityUtils;
 
 import java.security.Principal;
 import java.util.List;
@@ -26,14 +27,13 @@ public class CarController {
     }
 
     @GetMapping
-    public List<CarResponse> getPersonCars(Principal principal) {
-        return carService.loadUserCars(principal.getName());
+    public List<CarResponse> getPersonCars() {
+        return carService.loadUserCars(SecurityUtils.getUsername());
     }
 
     @PostMapping
-    public Response createCar(@RequestBody @Valid CarRequest carRequest,
-                              Principal principal) {
-        return carService.addUserCar(principal.getName(), carRequest);
+    public Response createCar(@RequestBody @Valid CarRequest carRequest) {
+        return carService.addUserCar(SecurityUtils.getUsername(), carRequest);
     }
 
     @PutMapping("/{id}")

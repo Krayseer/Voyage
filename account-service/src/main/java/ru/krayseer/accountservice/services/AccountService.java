@@ -9,20 +9,30 @@ public interface AccountService {
 
     /**
      * Загрузить данные о пользователе
-     * @param username username  пользователя
+     * @param username пользователь
      * @return данные об аккаунте
      */
     Response loadAccount(String username);
 
+    /**
+     * Загрузить данные об авторизованном пользователе
+     * @param request запрос с данными об аккаунте, о котором хотят получить информацию
+     * @return данные об авторизованном пользователе
+     */
     Response loadAccount(HttpServletRequest request);
 
     /**
      * Получить аватарку профиля из сервиса фотографий
-     * @param username авторизованный пользователь
+     * @param username пользователь
      * @return фотография
      */
     ResponseEntity<byte[]> getAccountAvatar(String username);
 
+    /**
+     * Получить аватарку профиля авторизованного пользователя из сервиса фотографий
+     * @param request запрос с данными об аккаунте, о котором хотят получить информацию
+     * @return фотографий авторизованного пользователя
+     */
     ResponseEntity<byte[]> getAccountAvatar(HttpServletRequest request);
 
     /**
@@ -33,6 +43,12 @@ public interface AccountService {
      */
     Response uploadAccountPhoto(MultipartFile multipartFile, String username);
 
+    /**
+     * Загрузить аватарку профиля авторизованного пользователя
+     * @param multipartFile аватарка профиля
+     * @param request запрос с данными об аккаунте, о котором хотят получить информацию
+     * @return ссылка на аватарку, которую можно использовать в сервисе фотографий
+     */
     Response uploadAccountPhoto(MultipartFile multipartFile, HttpServletRequest request);
 
 }

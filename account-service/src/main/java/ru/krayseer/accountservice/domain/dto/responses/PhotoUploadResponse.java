@@ -8,6 +8,9 @@ import ru.krayseer.accountservice.domain.dto.Response;
 @Builder
 public class PhotoUploadResponse implements Response {
 
+    /**
+     * Url картинки
+     */
     private String photoUrl;
 
 }

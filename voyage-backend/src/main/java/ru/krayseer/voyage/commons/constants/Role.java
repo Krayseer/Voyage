@@ -1,9 +1,19 @@
 package ru.krayseer.voyage.commons.constants;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
 
-    ROLE_USER,
+public enum Role implements GrantedAuthority {
 
-    ROLE_ADMIN
+    USER, ADMIN;
 
+    private final String authority;
+
+    Role() {
+        this.authority = "ROLE_" + name();
+    }
+
+    @Override
+    public String getAuthority() {
+        return authority;
+    }
 }

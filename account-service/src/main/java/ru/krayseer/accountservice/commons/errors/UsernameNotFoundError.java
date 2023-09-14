@@ -1,11 +1,11 @@
 package ru.krayseer.accountservice.commons.errors;
 
-import ru.krayseer.accountservice.commons.enums.ErrorCode;
+import ru.krayseer.accountservice.commons.constants.ErrorCode;
 
-public class UsernameNotFoundError extends Error {
+public class UsernameNotFoundError extends BaseError {
 
     public UsernameNotFoundError() {
-        super("Такого username не существует", ErrorCode.USERNAME_NOT_EXISTS);
+        super("this username does not exist", ErrorCode.USERNAME_NOT_EXISTS);
     }
 
 }

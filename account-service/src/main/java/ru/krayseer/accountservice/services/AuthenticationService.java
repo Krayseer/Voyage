@@ -19,7 +19,7 @@ public interface AuthenticationService {
      * @param secret секретный ключ, без которого создать администратора будет невозможно
      * @return данные об авторизации пользователя
      */
-    Response registerAdmin(RegisterRequest request, Integer secret);
+    Response registerAdmin(RegisterRequest request, String secret);
 
     /**
      * Аутентификация пользователя

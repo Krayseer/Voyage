@@ -1,6 +1,7 @@
 package ru.krayseer.voyage.domain.dto.responses;
 
 import lombok.Data;
+import ru.krayseer.voyage.commons.constants.Role;
 import ru.krayseer.voyage.domain.dto.Response;
 
 @Data
@@ -10,7 +11,7 @@ public class AuthResponse implements Response {
 
     private String token;
 
-    private String role;
+    private Role role;
 
     private String password;
 

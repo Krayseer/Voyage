@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.krayseer.accountservice.commons.errors.AccountNotExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
-import ru.krayseer.accountservice.commons.utils.Utils;
+import ru.krayseer.accountservice.domain.entities.Account;
+import ru.krayseer.accountservice.utils.Utils;
 import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
 import ru.krayseer.accountservice.domain.mappers.AccountMapper;
@@ -42,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Response loadAccount(HttpServletRequest request) {
-        var username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+        String username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
         return loadAccount(username);
     }
 
@@ -50,32 +51,30 @@ public class AccountServiceImpl implements AccountService {
     @SneakyThrows
     public ResponseEntity<byte[]> getAccountAvatar(String username) {
         log.info("Load \"{}\" avatar", username);
-        var account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
+        Account account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
         return remotePhotoService.getAccountPhotoFromStorage(account);
     }
 
     @Override
     public ResponseEntity<byte[]> getAccountAvatar(HttpServletRequest request) {
-        var username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+        String username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
         return getAccountAvatar(username);
     }
 
     @Override
     @SneakyThrows
     public Response uploadAccountPhoto(MultipartFile multipartFile, String username) {
-        var account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
-        var photoUrl = remotePhotoService.uploadPhotoInStorage(account, multipartFile);
+        Account account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
+        String photoUrl = remotePhotoService.uploadPhotoInStorage(account, multipartFile);
         account.setAvatarUrl(photoUrl);
         accountRepository.save(account);
         log.info("Save new account avatar for \"{}\"", username);
-        return PhotoUploadResponse.builder()
-                .photoUrl(photoUrl)
-                .build();
+        return PhotoUploadResponse.builder().photoUrl(photoUrl).build();
     }
 
     @Override
     public Response uploadAccountPhoto(MultipartFile multipartFile, HttpServletRequest request) {
-        var username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+        String username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
         return uploadAccountPhoto(multipartFile, username);
     }
 

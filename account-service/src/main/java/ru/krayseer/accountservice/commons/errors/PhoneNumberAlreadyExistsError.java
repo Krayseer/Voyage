@@ -1,11 +1,11 @@
 package ru.krayseer.accountservice.commons.errors;
 
-import ru.krayseer.accountservice.commons.enums.ErrorCode;
+import ru.krayseer.accountservice.commons.constants.ErrorCode;
 
-public class PhoneNumberAlreadyExistsError extends Error {
+public class PhoneNumberAlreadyExistsError extends BaseError {
 
     public PhoneNumberAlreadyExistsError() {
-        super("Данный телефонный номер уже существует", ErrorCode.PHONE_NUMBER_ALREADY_EXISTS);
+        super("this phone number already exists", ErrorCode.PHONE_NUMBER_ALREADY_EXISTS);
     }
 
 }
