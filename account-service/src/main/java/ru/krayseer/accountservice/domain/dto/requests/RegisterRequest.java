@@ -6,7 +6,7 @@ import lombok.Data;
 import ru.krayseer.accountservice.commons.constants.Role;
 import ru.krayseer.accountservice.commons.validations.EmailAddress;
 import ru.krayseer.accountservice.commons.validations.PhoneNumber;
-import ru.krayseer.accountservice.domain.dto.Request;
+import ru.krayseer.voyageapi.domain.dto.Request;
 
 @Data
 public class RegisterRequest implements Request {

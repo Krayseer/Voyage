@@ -1,10 +1,15 @@
 package ru.krayseer.apigateway.errors;
 
+import ru.krayseer.voyageapi.errors.VoyageErrorCode;
+
 /**
  * Коды ошибок для response
  */
-public enum ErrorCode {
+public enum ErrorCode implements VoyageErrorCode {
 
+    /**
+     * Отсутствие заголовка авторизации
+     */
     MISSING_AUTHORIZATION_HEADER,
 
     /**

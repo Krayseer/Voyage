@@ -1,7 +1,7 @@
 package ru.krayseer.voyage.domain.dto.responses;
 
 import lombok.Data;
-import ru.krayseer.voyage.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.dto.Response;
 
 import java.time.LocalDateTime;
 

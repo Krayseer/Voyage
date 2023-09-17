@@ -3,7 +3,8 @@ package ru.krayseer.accountservice.domain.dto.responses;
 import lombok.Builder;
 import lombok.Data;
 import ru.krayseer.accountservice.commons.constants.ErrorCode;
-import ru.krayseer.accountservice.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.voyageapi.errors.VoyageErrorCode;
 
 @Data
 @Builder
@@ -17,6 +18,6 @@ public class ErrorResponse implements Response {
     /**
      * Код ошибки
      */
-    private ErrorCode errorCode;
+    private VoyageErrorCode errorCode;
 
 }

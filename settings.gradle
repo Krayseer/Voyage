@@ -1,7 +1,8 @@
 rootProject.name = 'voyage'
 
-includeBuild 'voyage-backend'
-includeBuild 'photo-storage'
-includeBuild 'eureka-server'
-includeBuild 'api-gateway'
-includeBuild 'account-service'
+include 'voyage-backend'
+include 'photo-storage'
+include 'eureka-server'
+include 'api-gateway'
+include 'account-service'
+include 'voyage-api'

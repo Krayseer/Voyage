@@ -3,8 +3,9 @@ package ru.krayseer.accountservice.services;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import ru.krayseer.accountservice.domain.entities.Account;
+import ru.krayseer.voyageapi.services.RemoteService;
 
-public interface RemotePhotoService {
+public interface RemotePhotoService extends RemoteService {
 
     /**
      * Получить из сервиса фотографий аватарку профиля

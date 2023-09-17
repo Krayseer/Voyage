@@ -10,8 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import ru.krayseer.apigateway.errors.BaseError;
 import ru.krayseer.apigateway.errors.ErrorResponse;
+import ru.krayseer.apigateway.errors.InvalidTokenError;
 
 @Component
 @RequiredArgsConstructor
@@ -24,9 +24,9 @@ public class ErrorHandlingFilter implements ErrorWebExceptionHandler {
     @SneakyThrows
     public Mono<Void> handle(@NotNull ServerWebExchange exchange,
                              @NotNull Throwable ex) {
-        if (ex instanceof BaseError) {
+        if (ex instanceof InvalidTokenError) {
             var errorResponse = new ErrorResponse(
-                    ex.getMessage(), ((BaseError) ex).getErrorCode()
+                    ex.getMessage(), ((InvalidTokenError) ex).getErrorCode()
             );
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);

@@ -2,9 +2,6 @@ server:
   port:
     0
 
-app:
-  photo-service-url: ${PHOTO_SERVICE_URL}
-
 spring:
   application:
     name: voyage-backend

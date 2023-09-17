@@ -9,6 +9,7 @@ import ru.krayseer.voyage.domain.entities.Follower;
 import ru.krayseer.voyage.domain.entities.Trip;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
 import ru.krayseer.voyage.services.RemoteAccountService;
+import ru.krayseer.voyageapi.domain.mapper.Mapper;
 
 @Component
 @RequiredArgsConstructor

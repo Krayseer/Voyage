@@ -2,8 +2,8 @@ package ru.krayseer.voyage.domain.dto.responses;
 
 import lombok.Builder;
 import lombok.Data;
-import ru.krayseer.voyage.commons.constants.ErrorCode;
-import ru.krayseer.voyage.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.voyageapi.errors.VoyageErrorCode;
 
 @Data
 @Builder
@@ -11,6 +11,6 @@ public class ErrorResponse implements Response {
 
     private String message;
 
-    private ErrorCode errorCode;
+    private VoyageErrorCode errorCode;
 
 }

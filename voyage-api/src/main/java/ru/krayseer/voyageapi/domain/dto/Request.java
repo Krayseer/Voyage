@@ -1,4 +1,4 @@
-package ru.krayseer.voyage.domain.dto;
+package ru.krayseer.voyageapi.domain.dto;
 
 /**
  * Маркерный интерфейс для запросов

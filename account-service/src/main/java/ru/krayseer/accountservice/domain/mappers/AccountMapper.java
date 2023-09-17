@@ -6,20 +6,20 @@ import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.commons.errors.EmailAlreadyExistsError;
 import ru.krayseer.accountservice.commons.errors.PhoneNumberAlreadyExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameAlreadyExistsError;
-import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
-import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
 import ru.krayseer.accountservice.domain.dto.responses.AuthResponse;
 import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
 import ru.krayseer.accountservice.domain.entities.Account;
 import ru.krayseer.accountservice.domain.repositories.AccountRepository;
 import ru.krayseer.accountservice.services.RedisService;
+import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.mapper.Mapper;
 
 import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class AccountMapper {
+public class AccountMapper implements Mapper<Account, RegisterRequest> {
 
     private final RedisService redisService;
 
@@ -27,13 +27,12 @@ public class AccountMapper {
 
     private final AccountRepository accountRepository;
 
-    public Response createResponse(String username) {
-        Account account = accountRepository.findByUsername(username).orElseThrow(UsernameNotFoundError::new);
+    public Response createResponse(Account account) {
         return AuthResponse.builder()
                 .username(account.getUsername())
                 .password(account.getPassword())
                 .role(account.getRole())
-                .token(redisService.getUsernameToken(username))
+                .token(redisService.getUsernameToken(account.getUsername()))
                 .build();
     }
 

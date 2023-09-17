@@ -1,7 +1,7 @@
-package ru.krayseer.voyage.domain.mappers;
+package ru.krayseer.voyageapi.domain.mapper;
 
-import ru.krayseer.voyage.domain.dto.Request;
-import ru.krayseer.voyage.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.dto.Request;
+import ru.krayseer.voyageapi.domain.dto.Response;
 
 /**
  * Интерфейс для создания Entity из request, и response из Entity

@@ -9,6 +9,7 @@ import ru.krayseer.voyage.domain.entities.Trip;
 import lombok.RequiredArgsConstructor;
 import ru.krayseer.voyage.domain.repositories.CarRepository;
 import ru.krayseer.voyage.services.RemoteAccountService;
+import ru.krayseer.voyageapi.domain.mapper.Mapper;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,8 +19,6 @@ import java.util.List;
 public class TripMapper implements Mapper<Trip, TripRequest> {
 
     private final CarRepository carRepository;
-
-    private final RemoteAccountService remoteAccountService;
 
     private final FollowerMapper followerMapper;
 

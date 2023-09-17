@@ -1,6 +1,6 @@
 package ru.krayseer.voyage.services;
 
-import ru.krayseer.voyage.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.dto.Response;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 

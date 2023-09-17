@@ -6,7 +6,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
-import ru.krayseer.apigateway.errors.BaseError;
+import ru.krayseer.apigateway.errors.InvalidTokenError;
 import ru.krayseer.apigateway.services.RemoteAuthenticationService;
 
 @Slf4j
@@ -35,7 +35,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     var header = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
                     remoteAuthenticationService.validateToken(header);
                 } catch (HttpClientErrorException exception) {
-                    throw new BaseError(exception);
+                    throw new InvalidTokenError(exception);
                 }
             }
             return chain.filter(exchange);

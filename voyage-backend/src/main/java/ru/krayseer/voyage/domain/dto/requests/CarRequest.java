@@ -4,7 +4,7 @@ import lombok.*;
 import ru.krayseer.voyage.commons.validations.LicensePlate;
 
 import jakarta.validation.constraints.NotBlank;
-import ru.krayseer.voyage.domain.dto.Request;
+import ru.krayseer.voyageapi.domain.dto.Request;
 
 @Data
 @NoArgsConstructor

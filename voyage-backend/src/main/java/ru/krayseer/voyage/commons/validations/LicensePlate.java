@@ -2,10 +2,10 @@ package ru.krayseer.voyage.commons.validations;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import ru.krayseer.voyage.commons.constants.RegExp;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import ru.krayseer.voyageapi.commons.constants.RegExp;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group = 'ru.krayseer'
+version = '0.0.1'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+tasks {
+    compileJava.options.encoding = "UTF-8"
+}

@@ -11,13 +11,13 @@ import ru.krayseer.accountservice.commons.errors.AccountNotExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
 import ru.krayseer.accountservice.domain.entities.Account;
 import ru.krayseer.accountservice.utils.Utils;
-import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
 import ru.krayseer.accountservice.domain.mappers.AccountMapper;
 import ru.krayseer.accountservice.domain.repositories.AccountRepository;
 import ru.krayseer.accountservice.services.AccountService;
 import ru.krayseer.accountservice.services.RemotePhotoService;
 import ru.krayseer.accountservice.services.jwt.JwtService;
+import ru.krayseer.voyageapi.domain.dto.Response;
 
 @Slf4j
 @Service

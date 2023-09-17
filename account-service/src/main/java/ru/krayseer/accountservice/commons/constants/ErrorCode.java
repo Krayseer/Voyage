@@ -1,9 +1,11 @@
 package ru.krayseer.accountservice.commons.constants;
 
+import ru.krayseer.voyageapi.errors.VoyageErrorCode;
+
 /**
  * Коды ошибок для response
  */
-public enum ErrorCode {
+public enum ErrorCode implements VoyageErrorCode {
 
     /**
      * Аккаунта не существует

@@ -6,7 +6,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.krayseer.voyage.domain.dto.Response;
 import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
 import ru.krayseer.voyage.domain.dto.responses.AuthResponse;
 import ru.krayseer.voyage.services.RemoteAccountService;

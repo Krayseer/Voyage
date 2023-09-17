@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 import ru.krayseer.voyage.domain.entities.Car;
+import ru.krayseer.voyageapi.domain.mapper.Mapper;
 
 @Service
 @RequiredArgsConstructor

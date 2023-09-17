@@ -2,7 +2,7 @@ package ru.krayseer.accountservice.domain.dto.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import ru.krayseer.accountservice.domain.dto.Request;
+import ru.krayseer.voyageapi.domain.dto.Request;
 
 @Data
 public class AuthRequest implements Request {

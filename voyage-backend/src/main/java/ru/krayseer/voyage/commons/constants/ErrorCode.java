@@ -1,9 +1,11 @@
 package ru.krayseer.voyage.commons.constants;
 
+import ru.krayseer.voyageapi.errors.VoyageErrorCode;
+
 /**
  * Коды ошибок для response
  */
-public enum ErrorCode {
+public enum ErrorCode implements VoyageErrorCode {
 
     /**
      * Машина используется в поездке

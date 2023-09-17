@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.krayseer.voyage.commons.errors.BaseError;
 import ru.krayseer.voyage.domain.dto.responses.ErrorResponse;
+import ru.krayseer.voyageapi.errors.VoyageError;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +18,9 @@ import java.util.Map;
 @RestControllerAdvice
 public class ServiceExceptionHandler {
 
-    @ExceptionHandler(BaseError.class)
+    @ExceptionHandler(VoyageError.class)
     @ResponseStatus(HttpStatus.BAD_GATEWAY)
-    public ErrorResponse handlerException(BaseError ex) {
+    public ErrorResponse handlerException(VoyageError ex) {
         log.error("Ошибка: " + ex.getMessage());
         return ErrorResponse.builder()
                 .message(ex.getMessage())

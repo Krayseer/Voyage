@@ -1,7 +1,7 @@
 package ru.krayseer.voyage.controllers;
 
 import org.springframework.http.HttpStatus;
-import ru.krayseer.voyage.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.dto.Response;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 import ru.krayseer.voyage.services.CarService;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import ru.krayseer.voyage.utils.SecurityUtils;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController

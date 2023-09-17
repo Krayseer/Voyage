@@ -5,7 +5,7 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import ru.krayseer.accountservice.commons.constants.RegExp;
+import ru.krayseer.voyageapi.commons.constants.RegExp;
 
 import java.lang.annotation.*;
 

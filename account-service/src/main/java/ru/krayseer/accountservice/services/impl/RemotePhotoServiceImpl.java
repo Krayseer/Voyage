@@ -48,8 +48,8 @@ public class RemotePhotoServiceImpl implements RemotePhotoService {
         return photoUrl;
     }
 
-    // TODO: 14.09.2023 В отдельном модуле сделать общий интерфейс на подобие RemoteService в voyage-backend
     public String baseUrl() {
         return "http://localhost:8765/photo-storage/photo";
     }
+
 }

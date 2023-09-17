@@ -3,7 +3,7 @@ package ru.krayseer.accountservice.domain.dto.responses;
 import lombok.Builder;
 import lombok.Data;
 import ru.krayseer.accountservice.commons.constants.Role;
-import ru.krayseer.accountservice.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.dto.Response;
 
 @Data
 @Builder

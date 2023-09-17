@@ -4,37 +4,6 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT">
-            <builds>
-              <build path="$PROJECT_DIR$/account-service" name="account-service">
-                <projects>
-                  <project path="$PROJECT_DIR$/account-service" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/api-gateway" name="api-gateway">
-                <projects>
-                  <project path="$PROJECT_DIR$/api-gateway" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/eureka-server" name="eureka-server">
-                <projects>
-                  <project path="$PROJECT_DIR$/eureka-server" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/photo-storage" name="photo-storage">
-                <projects>
-                  <project path="$PROJECT_DIR$/photo-storage" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/voyage-backend" name="voyage-backend">
-                <projects>
-                  <project path="$PROJECT_DIR$/voyage-backend" />
-                </projects>
-              </build>
-            </builds>
-          </compositeBuild>
-        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
@@ -43,6 +12,7 @@
             <option value="$PROJECT_DIR$/api-gateway" />
             <option value="$PROJECT_DIR$/eureka-server" />
             <option value="$PROJECT_DIR$/photo-storage" />
+            <option value="$PROJECT_DIR$/voyage-api" />
             <option value="$PROJECT_DIR$/voyage-backend" />
           </set>
         </option>

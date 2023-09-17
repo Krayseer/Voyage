@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.accountservice.domain.dto.Response;
 import ru.krayseer.accountservice.services.AccountService;
+import ru.krayseer.voyageapi.domain.dto.Response;
 
 @RestController
 @RequiredArgsConstructor
