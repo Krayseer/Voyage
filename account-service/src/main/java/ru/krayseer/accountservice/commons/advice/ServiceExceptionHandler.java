@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.krayseer.accountservice.domain.dto.responses.ErrorResponse;
+import ru.krayseer.accountservice.domain.responses.ErrorResponse;
 import ru.krayseer.voyageapi.errors.VoyageError;
 
 import java.util.HashMap;

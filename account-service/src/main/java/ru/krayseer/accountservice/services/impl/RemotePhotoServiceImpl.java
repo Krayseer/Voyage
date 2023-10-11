@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.accountservice.domain.entities.Account;
+import ru.krayseer.accountservice.domain.Account;
 import ru.krayseer.accountservice.services.RemotePhotoService;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA;

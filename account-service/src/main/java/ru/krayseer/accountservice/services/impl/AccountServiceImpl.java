@@ -7,17 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.accountservice.commons.errors.AccountNotExistsError;
-import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
-import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
-import ru.krayseer.accountservice.domain.entities.Account;
+import ru.krayseer.accountservice.errors.AccountNotExistsError;
+import ru.krayseer.accountservice.errors.UsernameNotFoundError;
+import ru.krayseer.accountservice.domain.responses.AccountResponse;
+import ru.krayseer.accountservice.domain.Account;
 import ru.krayseer.accountservice.utils.Utils;
-import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
-import ru.krayseer.accountservice.domain.mappers.AccountMapper;
-import ru.krayseer.accountservice.domain.repositories.AccountRepository;
+import ru.krayseer.accountservice.domain.responses.PhotoUploadResponse;
+import ru.krayseer.accountservice.commons.mappers.AccountMapper;
+import ru.krayseer.accountservice.repositories.AccountRepository;
 import ru.krayseer.accountservice.services.AccountService;
 import ru.krayseer.accountservice.services.RemotePhotoService;
-import ru.krayseer.accountservice.services.jwt.JwtService;
+import ru.krayseer.accountservice.jwt.JwtService;
 
 @Slf4j
 @Service

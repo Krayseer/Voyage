@@ -5,7 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.ApplicationConfig;
 import ru.krayseer.accountservice.services.RedisService;
-import ru.krayseer.accountservice.services.jwt.JwtService;
+import ru.krayseer.accountservice.jwt.JwtService;
 import java.util.concurrent.TimeUnit;
 
 @Service

@@ -1,8 +1,7 @@
 package ru.krayseer.voyage.services;
 
-import ru.krayseer.voyageapi.domain.dto.Response;
-import ru.krayseer.voyage.domain.dto.requests.CarRequest;
-import ru.krayseer.voyage.domain.dto.responses.CarResponse;
+import ru.krayseer.voyage.domain.requests.CarRequest;
+import ru.krayseer.voyage.domain.responses.CarResponse;
 
 import java.util.List;
 

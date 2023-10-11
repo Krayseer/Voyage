@@ -5,10 +5,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.krayseer.accountservice.utils.Utils;
-import ru.krayseer.accountservice.domain.dto.requests.AuthRequest;
-import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
+import ru.krayseer.accountservice.domain.requests.AuthRequest;
+import ru.krayseer.accountservice.domain.requests.RegisterRequest;
 import ru.krayseer.accountservice.services.AuthenticationService;
-import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.Response;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,17 +1,16 @@
 package ru.krayseer.voyage.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.krayseer.voyage.commons.errors.CarIsPresentError;
-import ru.krayseer.voyage.commons.errors.CarNotExistsError;
+import ru.krayseer.voyage.errors.CarIsPresentError;
+import ru.krayseer.voyage.errors.CarNotExistsError;
 import ru.krayseer.voyage.domain.dao.TripDAO;
-import ru.krayseer.voyageapi.domain.dto.Response;
-import ru.krayseer.voyage.domain.dto.requests.CarRequest;
-import ru.krayseer.voyage.domain.dto.responses.CarResponse;
-import ru.krayseer.voyage.domain.entities.Car;
-import ru.krayseer.voyage.domain.repositories.CarRepository;
-import ru.krayseer.voyage.domain.repositories.TripRepository;
+import ru.krayseer.voyage.domain.requests.CarRequest;
+import ru.krayseer.voyage.domain.responses.CarResponse;
+import ru.krayseer.voyage.domain.Car;
+import ru.krayseer.voyage.repositories.CarRepository;
+import ru.krayseer.voyage.repositories.TripRepository;
 import ru.krayseer.voyage.services.CarService;
-import ru.krayseer.voyage.domain.mappers.CarMapper;
+import ru.krayseer.voyage.commons.mappers.CarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

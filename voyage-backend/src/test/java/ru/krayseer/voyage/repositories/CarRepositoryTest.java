@@ -11,8 +11,8 @@
 //import ru.krayseer.voyage.VoyageApplication;
 //import ru.krayseer.voyage.commons.constants.Role;
 //import ru.krayseer.voyage.context.ContainersEnvironment;
-//import ru.krayseer.voyage.domain.entities.Car;
-//import ru.krayseer.voyage.domain.repositories.CarRepository;
+//import ru.krayseer.voyage.domain.Car;
+//import ru.krayseer.voyage.repositories.CarRepository;
 //
 //import java.time.LocalDateTime;
 //

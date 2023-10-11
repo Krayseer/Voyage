@@ -6,7 +6,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import ru.krayseer.voyage.domain.entities.ChatMessage;
+import ru.krayseer.voyage.domain.ChatMessage;
 
 import static java.util.Objects.requireNonNull;
 

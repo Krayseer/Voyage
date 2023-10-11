@@ -1,9 +1,9 @@
 package ru.krayseer.voyage.controllers;
 
 import org.springframework.http.HttpStatus;
-import ru.krayseer.voyageapi.domain.dto.Response;
-import ru.krayseer.voyage.domain.dto.requests.CarRequest;
-import ru.krayseer.voyage.domain.dto.responses.CarResponse;
+import ru.krayseer.voyageapi.domain.Response;
+import ru.krayseer.voyage.domain.requests.CarRequest;
+import ru.krayseer.voyage.domain.responses.CarResponse;
 import ru.krayseer.voyage.services.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

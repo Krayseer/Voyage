@@ -1,8 +1,8 @@
 package ru.krayseer.accountservice.services;
 
-import ru.krayseer.accountservice.domain.dto.requests.AuthRequest;
-import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
-import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.accountservice.domain.requests.AuthRequest;
+import ru.krayseer.accountservice.domain.requests.RegisterRequest;
+import ru.krayseer.voyageapi.domain.Response;
 
 public interface AuthenticationService {
 

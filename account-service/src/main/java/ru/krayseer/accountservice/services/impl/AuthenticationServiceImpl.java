@@ -4,18 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.krayseer.accountservice.ApplicationConfig;
-import ru.krayseer.accountservice.commons.constants.Role;
-import ru.krayseer.accountservice.commons.errors.InvalidAdminSecretKeyError;
-import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
-import ru.krayseer.accountservice.domain.dto.requests.AuthRequest;
-import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
-import ru.krayseer.accountservice.domain.dto.responses.AuthResponse;
-import ru.krayseer.accountservice.domain.entities.Account;
-import ru.krayseer.accountservice.domain.mappers.AccountMapper;
-import ru.krayseer.accountservice.domain.repositories.AccountRepository;
+import ru.krayseer.accountservice.errors.InvalidAdminSecretKeyError;
+import ru.krayseer.accountservice.errors.UsernameNotFoundError;
+import ru.krayseer.accountservice.domain.requests.AuthRequest;
+import ru.krayseer.accountservice.domain.requests.RegisterRequest;
+import ru.krayseer.accountservice.domain.responses.AuthResponse;
+import ru.krayseer.accountservice.domain.Account;
+import ru.krayseer.accountservice.commons.mappers.AccountMapper;
+import ru.krayseer.accountservice.repositories.AccountRepository;
 import ru.krayseer.accountservice.services.AuthenticationService;
-import ru.krayseer.accountservice.services.jwt.JwtService;
-import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.accountservice.jwt.JwtService;
+import ru.krayseer.voyageapi.domain.Response;
 
 import java.util.Objects;
 

@@ -3,8 +3,8 @@ package ru.krayseer.accountservice.services;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
-import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
+import ru.krayseer.accountservice.domain.responses.AccountResponse;
+import ru.krayseer.accountservice.domain.responses.PhotoUploadResponse;
 
 public interface AccountService {
 

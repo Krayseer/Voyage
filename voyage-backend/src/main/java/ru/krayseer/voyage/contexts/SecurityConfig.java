@@ -15,9 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.krayseer.voyage.commons.filters.AuthenticationFilter;
-import ru.krayseer.voyage.domain.dto.responses.AuthResponse;
-import ru.krayseer.voyage.domain.entities.CustomUserDetails;
+import ru.krayseer.voyage.domain.responses.AuthResponse;
+import ru.krayseer.voyage.security.AuthenticationFilter;
+import ru.krayseer.voyage.security.VoyageUserDetails;
 import ru.krayseer.voyage.services.RemoteAccountService;
 
 @Configuration
@@ -47,7 +47,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(RemoteAccountService remoteAccountService) {
         return username -> {
             AuthResponse accountAuthInfo = remoteAccountService.getAccountAuthInfo(username);
-            return new CustomUserDetails(accountAuthInfo);
+            return new VoyageUserDetails(accountAuthInfo);
         };
     }
 
