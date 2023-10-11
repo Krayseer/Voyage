@@ -38,4 +38,5 @@ public abstract class VoyageError extends RuntimeException {
     public void setErrorCode(VoyageErrorCode errorCode) {
         this.errorCode = errorCode;
     }
+
 }

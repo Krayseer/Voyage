@@ -4,7 +4,7 @@ server:
 app:
   secret-key: ${SECRET_KEY}
   secret-admin: ${SECRET_ADMIN}
-  token-line-cycle: ${TOKEN_LIFE_CYCLE}
+  token-life-cycle: ${TOKEN_LIFE_CYCLE}
 
 spring:
   application:

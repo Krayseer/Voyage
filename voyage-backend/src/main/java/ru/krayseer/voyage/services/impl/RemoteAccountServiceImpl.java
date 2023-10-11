@@ -20,21 +20,21 @@ public class RemoteAccountServiceImpl implements RemoteAccountService {
 
     @Override
     public String getAccountUsername(String authHeader) {
-        var headers = new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.set(AUTHORIZATION, authHeader);
-        var url = String.format("%s/auth/username", baseUrl());
+        String url = String.format("%s/auth/username", baseUrl());
         return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class).getBody();
     }
 
     @Override
     public AuthResponse getAccountAuthInfo(String username) {
-        var url = String.format("%s/auth/auth-info?username=%s", baseUrl(), username);
+        String url = String.format("%s/auth/auth-info?username=%s", baseUrl(), username);
         return restTemplate.getForObject(url, AuthResponse.class);
     }
 
     @Override
     public AccountResponse getAccountInfo(String username) {
-        var url = String.format("%s/account/%s", baseUrl(), username);
+        String url = String.format("%s/account/%s", baseUrl(), username);
         return restTemplate.getForEntity(url, AccountResponse.class).getBody();
     }
 

@@ -3,7 +3,7 @@ package ru.krayseer.voyage.services.impl;
 import lombok.extern.slf4j.Slf4j;
 import ru.krayseer.voyage.commons.errors.SubscribeError;
 import ru.krayseer.voyage.commons.errors.TripNotExistsError;
-import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
 import ru.krayseer.voyage.domain.dto.requests.FollowerRequest;
 import ru.krayseer.voyage.domain.dto.requests.TripRequest;
 import ru.krayseer.voyage.domain.dto.responses.TripResponse;
@@ -41,7 +41,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public Response createNewTrip(String username, TripRequest tripRequest) {
+    public TripResponse createNewTrip(String username, TripRequest tripRequest) {
         tripRequest.setDriverUsername(username);
         Trip trip = tripMapper.createEntity(tripRequest);
         tripRepository.save(trip);
@@ -50,19 +50,20 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public Response subscribeFollowerOnTrip(Long tripId, String username) {
+    public FollowerResponse subscribeFollowerOnTrip(Long tripId, String username) {
         var trip = tripRepository.findById(tripId).orElseThrow(TripNotExistsError::new);
         if(trip.getDriverUsername().equals(username)) {
             throw new SubscribeError();
         }
-        Follower follower = followerMapper.createEntity(new FollowerRequest(tripId, username));
+        FollowerRequest followerInfo = new FollowerRequest(tripId, username);
+        Follower follower = followerMapper.createEntity(followerInfo);
         followersRepository.save(follower);
         log.info("Add follower with id {} on trip with id {}", tripId, follower.getId());
         return followerMapper.createResponse(follower);
     }
 
     @Override
-    public Response updateTrip(Long tripId, TripRequest tripRequest) {
+    public TripResponse updateTrip(Long tripId, TripRequest tripRequest) {
         Trip trip = tripRepository.findById(tripId).orElseThrow(TripNotExistsError::new);
         trip.setPrice(tripRequest.getPrice());
         trip.setAddressFrom(tripRequest.getAddressFrom());

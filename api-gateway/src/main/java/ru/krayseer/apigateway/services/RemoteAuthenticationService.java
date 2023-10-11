@@ -15,9 +15,9 @@ public class RemoteAuthenticationService implements RemoteService {
     private final RestTemplate restTemplate;
 
     public void validateToken(String header) {
-        var headers = new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION, header);
-        var url = String.format("%s/auth/validate?authHeader=%s", baseUrl(), header);
+        String url = String.format("%s/auth/validate?authHeader=%s", baseUrl(), header);
         restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), Boolean.class);
     }
 

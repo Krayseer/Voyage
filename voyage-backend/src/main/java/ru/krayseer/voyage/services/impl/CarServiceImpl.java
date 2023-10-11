@@ -3,6 +3,7 @@ package ru.krayseer.voyage.services.impl;
 import lombok.extern.slf4j.Slf4j;
 import ru.krayseer.voyage.commons.errors.CarIsPresentError;
 import ru.krayseer.voyage.commons.errors.CarNotExistsError;
+import ru.krayseer.voyage.domain.dao.TripDAO;
 import ru.krayseer.voyageapi.domain.dto.Response;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
@@ -28,7 +29,7 @@ public class CarServiceImpl implements CarService {
     private final CarMapper carMapper;
 
     @Override
-    public Response loadCar(Long id) {
+    public CarResponse loadCar(Long id) {
         Car car = carRepository.findById(id).orElseThrow(CarNotExistsError::new);
         log.info("Load car with id: {}", id);
         return carMapper.createResponse(car);
@@ -43,7 +44,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Response addUserCar(String username, CarRequest carRequest) {
+    public CarResponse addUserCar(String username, CarRequest carRequest) {
         carRequest.setAccountUsername(username);
         Car car = carMapper.createEntity(carRequest);
         carRepository.save(car);
@@ -52,7 +53,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Response updateCar(Long carId, CarRequest carRequest) {
+    public CarResponse updateCar(Long carId, CarRequest carRequest) {
         Car car = carRepository.findById(carId).orElseThrow(CarNotExistsError::new);
         car.setMark(carRequest.getMark());
         car.setColor(carRequest.getColor());
@@ -64,7 +65,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteCar(Long carId) {
-        var car = carRepository.findById(carId).orElseThrow(CarNotExistsError::new);
+        Car car = carRepository.findById(carId).orElseThrow(CarNotExistsError::new);
         if (tripRepository.findTripByCar(car).isPresent()) {
             throw new CarIsPresentError();
         }

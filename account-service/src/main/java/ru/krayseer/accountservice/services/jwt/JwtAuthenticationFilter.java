@@ -33,13 +33,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) {
-        var authHeader = request.getHeader(AUTHORIZATION);
+        String authHeader = request.getHeader(AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith(START_TOKEN_TAG)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        var token = authHeader.substring(INDEX_START_TOKEN_VALUE);
+        String token = authHeader.substring(INDEX_START_TOKEN_VALUE);
         try {
             jwtService.extractUsername(token);
         } catch (Exception ex) {

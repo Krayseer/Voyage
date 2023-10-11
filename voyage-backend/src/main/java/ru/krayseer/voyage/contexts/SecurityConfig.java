@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.krayseer.voyage.commons.filters.AuthenticationFilter;
+import ru.krayseer.voyage.domain.dto.responses.AuthResponse;
 import ru.krayseer.voyage.domain.entities.CustomUserDetails;
 import ru.krayseer.voyage.services.RemoteAccountService;
 
@@ -32,6 +33,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -43,7 +45,10 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(RemoteAccountService remoteAccountService) {
-        return username -> new CustomUserDetails(remoteAccountService.getAccountAuthInfo(username));
+        return username -> {
+            AuthResponse accountAuthInfo = remoteAccountService.getAccountAuthInfo(username);
+            return new CustomUserDetails(accountAuthInfo);
+        };
     }
 
     @Bean

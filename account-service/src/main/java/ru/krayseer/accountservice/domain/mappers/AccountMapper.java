@@ -12,14 +12,14 @@ import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
 import ru.krayseer.accountservice.domain.entities.Account;
 import ru.krayseer.accountservice.domain.repositories.AccountRepository;
 import ru.krayseer.accountservice.services.RedisService;
-import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.voyageapi.domain.dto.Request;
 import ru.krayseer.voyageapi.domain.mapper.Mapper;
 
 import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class AccountMapper implements Mapper<Account, RegisterRequest> {
+public class AccountMapper implements Mapper<Account> {
 
     private final RedisService redisService;
 
@@ -27,32 +27,34 @@ public class AccountMapper implements Mapper<Account, RegisterRequest> {
 
     private final AccountRepository accountRepository;
 
-    public Response createResponse(Account account) {
+    public AuthResponse createResponse(Account account) {
+        String authToken = redisService.getUsernameToken(account.getUsername());
         return AuthResponse.builder()
                 .username(account.getUsername())
                 .password(account.getPassword())
                 .role(account.getRole())
-                .token(redisService.getUsernameToken(account.getUsername()))
+                .token(authToken)
                 .build();
     }
 
-    public Account createEntity(RegisterRequest accountRequest) {
-        if (accountRepository.existsByUsername(accountRequest.getUsername())) {
+    public Account createEntity(Request request) {
+        RegisterRequest registerRequest = (RegisterRequest) request;
+        if (accountRepository.existsByUsername(registerRequest.getUsername())) {
             throw new UsernameAlreadyExistsError();
-        } else if (accountRepository.existsByEmail(accountRequest.getEmail())) {
+        } else if (accountRepository.existsByEmail(registerRequest.getEmail())) {
             throw new EmailAlreadyExistsError();
-        } else if (accountRepository.existsByPhoneNumber(accountRequest.getPhoneNumber())) {
+        } else if (accountRepository.existsByPhoneNumber(registerRequest.getPhoneNumber())) {
             throw new PhoneNumberAlreadyExistsError();
         } else {
             return Account.builder()
-                    .username(accountRequest.getUsername())
-                    .password(passwordEncoder.encode(accountRequest.getPassword()))
-                    .name(accountRequest.getName())
-                    .age(accountRequest.getAge())
-                    .phoneNumber(accountRequest.getPhoneNumber())
-                    .email(accountRequest.getEmail())
+                    .username(registerRequest.getUsername())
+                    .password(passwordEncoder.encode(registerRequest.getPassword()))
+                    .name(registerRequest.getName())
+                    .age(registerRequest.getAge())
+                    .phoneNumber(registerRequest.getPhoneNumber())
+                    .email(registerRequest.getEmail())
                     .createdAt(LocalDateTime.now())
-                    .role(accountRequest.getRole())
+                    .role(registerRequest.getRole())
                     .build();
         }
     }

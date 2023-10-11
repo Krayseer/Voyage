@@ -3,16 +3,21 @@ package ru.krayseer.accountservice.services.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.krayseer.accountservice.ApplicationConfig;
 import ru.krayseer.accountservice.commons.constants.Role;
+import ru.krayseer.accountservice.commons.errors.InvalidAdminSecretKeyError;
 import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
 import ru.krayseer.accountservice.domain.dto.requests.AuthRequest;
 import ru.krayseer.accountservice.domain.dto.requests.RegisterRequest;
+import ru.krayseer.accountservice.domain.dto.responses.AuthResponse;
 import ru.krayseer.accountservice.domain.entities.Account;
 import ru.krayseer.accountservice.domain.mappers.AccountMapper;
 import ru.krayseer.accountservice.domain.repositories.AccountRepository;
 import ru.krayseer.accountservice.services.AuthenticationService;
 import ru.krayseer.accountservice.services.jwt.JwtService;
 import ru.krayseer.voyageapi.domain.dto.Response;
+
+import java.util.Objects;
 
 import static ru.krayseer.accountservice.commons.constants.Role.ADMIN;
 import static ru.krayseer.accountservice.commons.constants.Role.USER;
@@ -22,13 +27,15 @@ import static ru.krayseer.accountservice.commons.constants.Role.USER;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private final AccountRepository accountRepository;
+    private final JwtService jwtService;
 
     private final AccountMapper accountMapper;
 
-    private final JwtService jwtService;
+    private final AccountRepository accountRepository;
 
-    public Response authenticate(AuthRequest request) {
+    private final ApplicationConfig applicationConfig;
+
+    public AuthResponse authenticate(AuthRequest request) {
         Account account = accountRepository.findByUsername(request.getUsername()).orElseThrow(UsernameNotFoundError::new);
         return accountMapper.createResponse(account);
     }
@@ -38,19 +45,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return token == null ? null : jwtService.extractUsername(token);
     }
 
-    public Response registerUser(RegisterRequest request) {
-        return createAccount(request, USER);
+    public AuthResponse registerUser(RegisterRequest request) {
+        request.setRole(USER);
+        return createAccount(request);
     }
 
-    public Response registerAdmin(RegisterRequest request, String secret) {
-//        if (!Objects.equals(secret, .getSecretAdmin())) {
-//            throw new RuntimeException("invalid secret admin key");
-//        }
-        return createAccount(request, ADMIN);
+    public AuthResponse registerAdmin(RegisterRequest request, String secret) {
+        if (!Objects.equals(secret, applicationConfig.getSecretAdmin())) {
+            throw new InvalidAdminSecretKeyError();
+        }
+        request.setRole(ADMIN);
+        return createAccount(request);
     }
 
-    private Response createAccount(RegisterRequest request, Role role) {
-        request.setRole(role);
+    private AuthResponse createAccount(RegisterRequest request) {
         Account account = accountMapper.createEntity(request);
         accountRepository.save(account);
         return accountMapper.createResponse(account);

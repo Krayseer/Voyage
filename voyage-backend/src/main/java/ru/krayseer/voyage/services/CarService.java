@@ -12,7 +12,7 @@ public interface CarService {
      * @param id идентификатор автомобиля
      * @return данные об автомобиле
      */
-    Response loadCar(Long id);
+    CarResponse loadCar(Long id);
 
     /**
      * Загрузить автомобили авторизованного пользователя
@@ -28,7 +28,7 @@ public interface CarService {
      * @param carRequest данные о автомобиле
      * @return данные о сохраненном в БД автомобиле
      */
-    Response addUserCar(String username, CarRequest carRequest);
+    CarResponse addUserCar(String username, CarRequest carRequest);
 
     /**
      * Обновить данные об автомобиле по id
@@ -36,7 +36,7 @@ public interface CarService {
      * @param carRequest обновлённые данные
      * @return данные о сохраненном в БД автомобиле
      */
-    Response updateCar(Long carId, CarRequest carRequest);
+    CarResponse updateCar(Long carId, CarRequest carRequest);
 
     /**
      * Удалить автомобиль, если данный автомобиль не зарегистрирован в поездке

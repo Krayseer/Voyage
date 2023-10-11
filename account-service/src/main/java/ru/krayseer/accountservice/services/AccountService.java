@@ -3,7 +3,8 @@ package ru.krayseer.accountservice.services;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
-import ru.krayseer.voyageapi.domain.dto.Response;
+import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
+import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
 
 public interface AccountService {
 
@@ -12,14 +13,14 @@ public interface AccountService {
      * @param username пользователь
      * @return данные об аккаунте
      */
-    Response loadAccount(String username);
+    AccountResponse loadAccount(String username);
 
     /**
      * Загрузить данные об авторизованном пользователе
      * @param request запрос с данными об аккаунте, о котором хотят получить информацию
      * @return данные об авторизованном пользователе
      */
-    Response loadAccount(HttpServletRequest request);
+    AccountResponse loadAccount(HttpServletRequest request);
 
     /**
      * Получить аватарку профиля из сервиса фотографий
@@ -41,7 +42,7 @@ public interface AccountService {
      * @param username авторизованный пользователь
      * @return ссылка на аватарку, которую можно использовать в сервисе фотографий
      */
-    Response uploadAccountPhoto(MultipartFile multipartFile, String username);
+    PhotoUploadResponse uploadAccountPhoto(MultipartFile multipartFile, String username);
 
     /**
      * Загрузить аватарку профиля авторизованного пользователя
@@ -49,6 +50,6 @@ public interface AccountService {
      * @param request запрос с данными об аккаунте, о котором хотят получить информацию
      * @return ссылка на аватарку, которую можно использовать в сервисе фотографий
      */
-    Response uploadAccountPhoto(MultipartFile multipartFile, HttpServletRequest request);
+    PhotoUploadResponse uploadAccountPhoto(MultipartFile multipartFile, HttpServletRequest request);
 
 }

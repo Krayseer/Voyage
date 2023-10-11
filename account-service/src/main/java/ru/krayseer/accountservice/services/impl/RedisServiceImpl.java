@@ -14,11 +14,11 @@ public class RedisServiceImpl implements RedisService {
 
     private static final String JWT_TOKEN_PREFIX = "jwt";
 
-    private final RedisTemplate<String, String> redisTemplate;
-
     private final JwtService jwtService;
 
     private final ApplicationConfig applicationConfig;
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     /**
      * Сгенерированный jwt токен фиксируется в redis со временем хранения равным жизненному циклу токена.

@@ -1,6 +1,6 @@
 package ru.krayseer.voyageapi.commons.constants;
 
-public class RegExp {
+public final class RegExp {
 
     /**
      * Корректный телефонный номер

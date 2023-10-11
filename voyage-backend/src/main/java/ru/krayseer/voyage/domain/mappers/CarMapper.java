@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 import ru.krayseer.voyage.domain.dto.requests.CarRequest;
 import ru.krayseer.voyage.domain.dto.responses.CarResponse;
 import ru.krayseer.voyage.domain.entities.Car;
+import ru.krayseer.voyageapi.domain.dto.Request;
 import ru.krayseer.voyageapi.domain.mapper.Mapper;
 
 @Service
 @RequiredArgsConstructor
-public class CarMapper implements Mapper<Car, CarRequest> {
+public class CarMapper implements Mapper<Car> {
 
     @Override
     public CarResponse createResponse(Car car) {
@@ -23,12 +24,13 @@ public class CarMapper implements Mapper<Car, CarRequest> {
     }
 
     @Override
-    public Car createEntity(CarRequest car) {
+    public Car createEntity(Request request) {
+        CarRequest carRequest = (CarRequest) request;
         return Car.builder()
-                .mark(car.getMark())
-                .color(car.getColor())
-                .licensePlate(car.getLicensePlate())
-                .accountUsername(car.getAccountUsername())
+                .mark(carRequest.getMark())
+                .color(carRequest.getColor())
+                .licensePlate(carRequest.getLicensePlate())
+                .accountUsername(carRequest.getAccountUsername())
                 .build();
     }
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.krayseer.accountservice.commons.errors.AccountNotExistsError;
 import ru.krayseer.accountservice.commons.errors.UsernameNotFoundError;
+import ru.krayseer.accountservice.domain.dto.responses.AccountResponse;
 import ru.krayseer.accountservice.domain.entities.Account;
 import ru.krayseer.accountservice.utils.Utils;
 import ru.krayseer.accountservice.domain.dto.responses.PhotoUploadResponse;
@@ -17,23 +18,22 @@ import ru.krayseer.accountservice.domain.repositories.AccountRepository;
 import ru.krayseer.accountservice.services.AccountService;
 import ru.krayseer.accountservice.services.RemotePhotoService;
 import ru.krayseer.accountservice.services.jwt.JwtService;
-import ru.krayseer.voyageapi.domain.dto.Response;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
-    private final AccountRepository accountRepository;
+    private final JwtService jwtService;
 
     private final AccountMapper accountMapper;
 
+    private final AccountRepository accountRepository;
+
     private final RemotePhotoService remotePhotoService;
 
-    private final JwtService jwtService;
-
     @Override
-    public Response loadAccount(String username) {
+    public AccountResponse loadAccount(String username) {
         log.info("Load \"{}\" account", username);
         return accountRepository
                 .findByUsername(username)
@@ -42,8 +42,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Response loadAccount(HttpServletRequest request) {
-        String username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+    public AccountResponse loadAccount(HttpServletRequest request) {
+        String userToken = Utils.getTokenFromHeader(request);
+        String username = jwtService.extractUsername(userToken);
         return loadAccount(username);
     }
 
@@ -57,13 +58,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseEntity<byte[]> getAccountAvatar(HttpServletRequest request) {
-        String username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+        String userToken = Utils.getTokenFromHeader(request);
+        String username = jwtService.extractUsername(userToken);
         return getAccountAvatar(username);
     }
 
     @Override
     @SneakyThrows
-    public Response uploadAccountPhoto(MultipartFile multipartFile, String username) {
+    public PhotoUploadResponse uploadAccountPhoto(MultipartFile multipartFile, String username) {
         Account account = accountRepository.findByUsername(username).orElseThrow(AccountNotExistsError::new);
         String photoUrl = remotePhotoService.uploadPhotoInStorage(account, multipartFile);
         account.setAvatarUrl(photoUrl);
@@ -73,8 +75,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Response uploadAccountPhoto(MultipartFile multipartFile, HttpServletRequest request) {
-        String username = jwtService.extractUsername(Utils.getTokenFromHeader(request));
+    public PhotoUploadResponse uploadAccountPhoto(MultipartFile multipartFile, HttpServletRequest request) {
+        String userToken = Utils.getTokenFromHeader(request);
+        String username = jwtService.extractUsername(userToken);
         return uploadAccountPhoto(multipartFile, username);
     }
 

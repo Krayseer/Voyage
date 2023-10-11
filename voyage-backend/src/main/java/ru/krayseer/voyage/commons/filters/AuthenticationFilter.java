@@ -8,10 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.krayseer.voyage.domain.dto.responses.ErrorResponse;
@@ -38,14 +36,25 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NotNull HttpServletRequest request,
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) {
-        var username = remoteAccountService.getAccountUsername(request.getHeader(AUTHORIZATION));
-        if (username != null && !SecurityUtils.isAuthentication()) {
-            SecurityUtils.authenticate(userDetailsService.loadUserByUsername(username), request);
+        String authHeader = request.getHeader(AUTHORIZATION);
+        if (authHeader == null) {
+           filterChain.doFilter(request, response);
+           return;
+        }
+
+        String username = remoteAccountService.getAccountUsername(authHeader);
+        if (isUserNeedAuthenticate(username)) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            SecurityUtils.authenticate(userDetails, request);
         } else {
             handleAuthenticationError(response);
             return;
         }
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isUserNeedAuthenticate(String username) {
+        return username != null && !SecurityUtils.isAuthentication();
     }
 
     @SneakyThrows

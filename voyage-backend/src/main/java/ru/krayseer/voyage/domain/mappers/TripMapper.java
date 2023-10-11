@@ -8,7 +8,7 @@ import ru.krayseer.voyage.domain.dto.responses.TripResponse;
 import ru.krayseer.voyage.domain.entities.Trip;
 import lombok.RequiredArgsConstructor;
 import ru.krayseer.voyage.domain.repositories.CarRepository;
-import ru.krayseer.voyage.services.RemoteAccountService;
+import ru.krayseer.voyageapi.domain.dto.Request;
 import ru.krayseer.voyageapi.domain.mapper.Mapper;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class TripMapper implements Mapper<Trip, TripRequest> {
+public class TripMapper implements Mapper<Trip> {
 
     private final CarRepository carRepository;
 
@@ -42,7 +42,8 @@ public class TripMapper implements Mapper<Trip, TripRequest> {
     }
 
     @Override
-    public Trip createEntity(TripRequest tripRequest) {
+    public Trip createEntity(Request request) {
+        TripRequest tripRequest = (TripRequest) request;
         var car = carRepository.findById(tripRequest.getCarId()).orElseThrow(CarNotExistsError::new);
         return Trip.builder()
                 .price(tripRequest.getPrice())

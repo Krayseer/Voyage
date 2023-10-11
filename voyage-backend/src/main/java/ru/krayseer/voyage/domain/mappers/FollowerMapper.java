@@ -4,16 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.krayseer.voyage.commons.errors.TripNotExistsError;
 import ru.krayseer.voyage.domain.dto.requests.FollowerRequest;
+import ru.krayseer.voyage.domain.dto.responses.AccountResponse;
 import ru.krayseer.voyage.domain.dto.responses.FollowerResponse;
 import ru.krayseer.voyage.domain.entities.Follower;
 import ru.krayseer.voyage.domain.entities.Trip;
 import ru.krayseer.voyage.domain.repositories.TripRepository;
 import ru.krayseer.voyage.services.RemoteAccountService;
+import ru.krayseer.voyageapi.domain.dto.Request;
 import ru.krayseer.voyageapi.domain.mapper.Mapper;
 
 @Component
 @RequiredArgsConstructor
-public class FollowerMapper implements Mapper<Follower, FollowerRequest> {
+public class FollowerMapper implements Mapper<Follower> {
 
     private final TripRepository tripRepository;
 
@@ -21,7 +23,7 @@ public class FollowerMapper implements Mapper<Follower, FollowerRequest> {
 
     @Override
     public FollowerResponse createResponse(Follower follower) {
-        var followerAccount = remoteAccountService.getAccountInfo(follower.getAccountUsername());
+        AccountResponse followerAccount = remoteAccountService.getAccountInfo(follower.getAccountUsername());
         return FollowerResponse.builder()
                 .username(followerAccount.getUsername())
                 .name(followerAccount.getName())
@@ -30,7 +32,8 @@ public class FollowerMapper implements Mapper<Follower, FollowerRequest> {
     }
 
     @Override
-    public Follower createEntity(FollowerRequest followerRequest) {
+    public Follower createEntity(Request request) {
+        FollowerRequest followerRequest = (FollowerRequest) request;
         Trip trip = tripRepository.findById(followerRequest.getTripId()).orElseThrow(TripNotExistsError::new);
         return Follower.builder()
                 .trip(trip)

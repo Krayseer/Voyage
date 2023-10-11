@@ -37,4 +37,9 @@ public enum ErrorCode implements VoyageErrorCode {
      */
     AUTHENTICATION_ERROR,
 
+    /**
+     * Некорректный секретный ключ для создания администратора
+     */
+    INVALID_ADMIN_SECRET_KEY
+
 }
